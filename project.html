@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+  <!-- 테스트 데이터 -->
+  <script src="./js/dummy-data.js"></script>
+  <!-- 색상 결정 규칙 -->
+  <script src="./js/color-rules.js"></script>
+  <!-- 차트 그리는 함수 (원형/막대) -->
+  <script src="./js/donut.js"></script>
+  <!-- 커스텀 css / js-->
+  <link rel="stylesheet" href="./style.css">
+  <title>피더파이프 제조 현황</title>
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebar"></div>
+    <div class="layout-main">
+      <div class="layout-right">
+        <header id="header"></header>
+        <main id="content-wrap">
+          <div class="progress-slider">
+            <!-- 슬라이드 전체 래퍼 -->
+            <div class="progress-slides">
+
+              <!-- 1번 슬라이드: Pickering -->
+              <div class="progress-slide" data-plant="pickering" data-plant-name="Pickering">
+                <div class="slide-layout">
+                  <div class="slide-left">
+                    <!-- 카드1: Total Progress -->
+                    <div class="card card-small" id="card-total-progress1">
+                      <div class="card-header">
+                        <div class="card-title"><span class="sl"></span>Pickering#1 <span> Total Progress</span></div>
+                        <span class="card-badge" data-role="total-badge" id="total-progress-badge-pickering"></span>
+                      </div>
+                      <div class="bar-chart-horizontal" data-role="total-bar" id="total-progress-chart-pickering"></div>
+                    </div>
+                    <!-- 카드2: 공정별 -->
+                    <div class="card card-small" id="card-total-progress2">
+                      <div class="card-header">
+                        <div class="card-title"><span class="sl"></span>공정별 계획대비 진도율 <span> (Pcs/Month)</span></div>
+                        <div class="card-legend" aria-label="legend">
+                          <span class="legend-item"><i class="dot dot-actual"></i>실적</span>
+                          <span class="legend-item"><i class="dot dot-plan"></i>계획</span>
+                        </div>
+                      </div>
+                      <div class="bar-chart-horizontal" data-role="proc-bars" id="total-progress-chart-proc-pickering"></div>
+                    </div>
+                  </div>
+
+                  <div class="slide-right">
+                    <div class="card card-large">
+                      <div class="card-title"><span class="sl"></span>Real-Time Progress Status</div>
+                      <div class="proc-donut-grid" data-role="donut-grid" id="procDonutGrid-pickering"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2번 슬라이드: Cernavoda -->
+              <div class="progress-slide theme-cernavoda" data-plant="cernavoda" data-plant-name="Cernavoda">
+                <div class="slide-layout">
+                  <div class="slide-left">
+                    <!-- 카드1: Total Progress -->
+                    <div class="card card-small" id="card-total-progress1-cernavoda">
+                      <div class="card-header">
+                        <div class="card-title"><span class="sl"></span>Cernavoda <span> Total Progress</span></div>
+                        <span class="card-badge" data-role="total-badge" id="total-progress-badge-cernavoda"></span>
+                      </div>
+                      <div class="bar-chart-horizontal" data-role="total-bar" id="total-progress-chart-cernavoda"></div>
+                    </div>
+                    <!-- 카드2: 공정별 -->
+                    <div class="card card-small" id="card-total-progress2-cernavoda">
+                      <div class="card-header">
+                        <div class="card-title"><span class="sl"></span>공정별 계획대비 진도율 <span> (Pcs/Month)</span></div>
+                        <div class="card-legend" aria-label="legend">
+                          <span class="legend-item"><i class="dot dot-actual"></i>실적</span>
+                          <span class="legend-item"><i class="dot dot-plan"></i>계획</span>
+                        </div>
+                      </div>
+                      <div class="bar-chart-horizontal" data-role="proc-bars" id="total-progress-chart-proc-cernavoda"></div>
+                    </div>
+                  </div>
+                  <div class="slide-right">
+                    <div class="card card-large">
+                      <div class="card-title"><span class="sl"></span>Real-Time Progress Status</div>
+                      <div class="proc-donut-grid" data-role="donut-grid" id="procDonutGrid-cernavoda"></div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- 오른쪽 next 버튼 -->
+            <button class="slider-next" type="button">
+              <img src="./images/next.png" alt="다음">
+            </button>
+  
+            <!-- 하단 점 표시 -->
+            <div class="slider-dots">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/custom.js"></script>
+  <script>
+    // header.html → #header
+    fetch("./header.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("header").innerHTML = html;
+      });
+  </script>
+  <!-- header, sidebar, title load -->
+  <script src="./js/layout.js"></script>
+  <!-- 기능 렌더러 : 바차트, 도넛 랜딩 -->
+  <script src="./js/project-total-progress.js"></script>
+  <!-- ui 컨트롤러 : 프로젝트 진행 현황 슬라이더 -->
+  <script src="./js/progress-slider.js"></script>
+</body>
+</html>

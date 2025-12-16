@@ -1,0 +1,1108 @@
+/* Google Web Font : Noto+Sans */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+/* FontAwesome CDN 4.7 */
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+/* XEION CDN */
+@import url('https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css');
+
+/* Recet Css */
+* {box-sizing: border-box;}
+ul {list-style: none; padding: 0; margin: 0;}
+a {text-decoration: none; color: #222;}
+h1, h2, h3, h4, h5 {margin: 0;}
+
+html, body {
+  margin: 0px;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background: #fff;
+  color: #333;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+.layout-main {
+  background: #F6F6F8;
+}
+/* ============= 헤더 ================ */
+header {
+  margin-bottom: 20px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  width: 100%;
+}
+/* 헤더 전체 라인 + 그림자 */
+.gnb-inner {
+  height: 60px;
+  background: #fff;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.layout-main {
+  width: 100%;
+}
+/* 왼쪽은 일단 비워두거나 타이틀 */
+.gnb-left {
+  display: flex;
+  align-items: center;
+}
+/* 오른쪽 전체 */
+.gnb-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+/* --- 세션 박스 --- */
+.session-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 5px;
+  background: #eee;
+  font-size: 12px;
+  color: #7a7a7a;
+}
+.session-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+/* --- 유저 박스 --- */
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* 기본 아바타 (person.png가 기본 배경) */
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: url("/images/person.png") center/cover no-repeat;
+}
+/* 실제 유저 사진이 있을 때 (img가 있으면 그걸로 덮어씀) */
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.user-name {
+  font-size: 14px;
+  color: #444;
+  padding-right: 20px;
+}
+/* 로그아웃 버튼 */
+.btn-logout {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.btn-logout img {
+  width: 18px;
+  height: 18px;
+}
+
+
+/* setion:feeder-sec 왼쪽- 피더이미지 */
+.feeder-sec {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 20px;
+  height: 70vh;
+}
+.feeder-img {
+  flex: 4;
+  text-align: center;
+}
+.feeder-img img {
+  width: 99%;
+}
+.bc {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+.fimg-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  height: 60px;
+}
+.blue {
+  color: #005EB8;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+/* setion:feeder-sec 오른쪽- 피더정보 */
+.feeder-info {
+  flex: 2.5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.feeder-info1 {
+  flex: 1;
+  display: flex;
+}
+.feeder-info2 {
+  flex: 2;
+}
+.feeder-info3 {
+  flex: 2;
+}
+/* 카드 박스  */
+.fx {
+  display: flex;
+}
+.feeder-card {
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: 8px;
+}
+/* ============ 요약카드 레이아웃 ============ */
+.feeder-info1{ align-items: stretch; }
+.feeder-body-row{
+  display:flex;
+  align-items:center;
+  justify-content: space-around;
+  gap:18px;
+  margin-top: 8px;
+}
+/* KPI(목표/달성) */
+.feeder-kpi{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width: 110px;
+}
+.kpi-row{
+  display:flex;
+  align-items:baseline;
+  gap:20px;
+}
+.kpi-label{
+  font-size:16px;
+  color:#686D78;
+}
+.kpi-value{
+  font-size:28px;
+  font-weight:700;
+}
+/* 중간 세로 구분선*/
+.feeder-divider{
+  width:3px;
+  height:70px;
+  background:#EEEEEE;
+}
+/* 오른쪽 U/M/L 바 */
+.feeder-mini-bars{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-width: 220px;
+}
+.mini-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.mini-value{
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+}
+.mini-label{
+  width:60px;
+  font-size: 14px;
+  color:#111;
+}
+.mini-track{
+  flex:1;
+  height:14px;
+  background:#EEEEEE;
+  border-radius:2px;
+  overflow:hidden;
+  border-radius: 2px;
+  transition: width .35s ease;
+}
+.mini-fill{
+  height:100%;
+  width:0%;
+}
+.mini-pct {
+  width: 20px;
+  margin-left: 7px;
+  font-weight: 500;
+}
+/* 색상: U/M/L 순 */
+.mini-fill-upper  { background:#9CD8FF; }
+.mini-fill-middle { background:#26A2FE; }
+.mini-fill-lower  { background:#0C77EA; }
+/* 미니바-체르보나다 버전 */
+body.theme-cernavoda .mini-fill-upper  { background:#FFC54E; }
+body.theme-cernavoda .mini-fill-middle { background:#FFBE3A; }
+body.theme-cernavoda .mini-fill-lower  { background:#FFA000; }
+
+.hline {
+  width: 80%;
+  border-top: 1px solid #d1d0d0;
+  margin: 30px auto;
+}
+.vline {
+  width: 2px;
+  height: 60%;
+  background: #d1d0d0;
+}
+/* 좌우 영역 비율 */
+.feeder-left {
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.feeder-right {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 제목 라인 */
+.feeder-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* 메인 제목(라인명) */
+.feeder-title-main {
+  font-weight: 400;
+  font-size: 18px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.feeder-title-main img {
+  width: 24px;
+  height: 24px;
+}
+/* 서브 제목(Upper Feeder) – 파란색 */
+.feeder-stitle {
+  color: #005eb8;
+  font-weight: 600;
+  font-size: 18px;
+}
+/* 수량 라인 */
+.feeder-count-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-weight: 700;
+}
+/* 현재 제작 수량 */
+.feeder-current {
+  font-size: 45px;
+}
+.feeder-separator {
+  font-size: 40px;
+  font-weight: 200;
+  padding: 0 10px;
+}
+/* 전체 수량 */
+.feeder-total {
+  font-size: 45px;
+}
+.feeder-donut-con {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+/* 도넛 컨테이너 */
+.feeder-ring {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.feeder-canvas {
+  position: absolute;
+  inset: 0;
+}
+/* 퍼센트 숫자 */
+.feeder-percent {
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  color: #005EB8;
+}
+body.theme-cernavoda .feeder-percent { 
+  color:#FF7300; 
+}
+body.theme-cernavoda .feeder-stitle{ color:#FF7300; }
+
+/* 카드 공통(feeder-card)는 기존 것 그대로 사용 */
+/* 타이틀 + 범례 행 */
+.proc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+/* 범례 */
+.proc-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+.proc-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.proc-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.proc-legend-dot--plan {
+  background-color: #999; /* 계획 */
+}
+.proc-legend-dot--actual {
+  background-color: #005feb; /* 실적 */
+}
+/* 체르나보다(Cernavoda) */
+body.theme-cernavoda .proc-legend-dot--actual {
+  background-color: #FF8A3D; /* 주황 */
+}
+/* Daily 누적(라인) 범례 색 = 선색 */
+.proc-legend-dot--daily { background-color: #69DCF6; }           /* Pickering */
+body.theme-cernavoda .proc-legend-dot--daily { background-color: #FFC54E; } /* Cernavoda */
+
+/* ===== 막대 그래프 영역 ===== */
+
+/* 카드 래퍼 */
+.proc-bar-chart {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  padding: 0 15px 15px 15px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  overflow: hidden;
+}
+/* grid 래퍼 */
+.proc-plot {
+  position: relative;
+  height: 170px;
+  width: 100%;
+}
+.proc-grid{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  inset: 0;
+  top: -21px;
+  border-bottom: 1px solid #D9D9D9;
+}
+/* 그리드 SVG 오버레이 */
+/* 막대들은 그리드 위로 */
+#procBarChart{
+  position: relative; 
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 170px;
+  gap: 22px;
+  z-index: 1;
+}
+/* 라인 오버레이 */
+#procBarChart .proc-daily-overlay{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+/* 각 공정(컬럼) */
+.proc-bar-column {
+  flex: 1 1 0;
+  min-width: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 1; /* 배경 점선 위로 */
+}
+
+/* 막대 영역 */
+.proc-bar-wrapper {
+  position: relative;
+  width: 30px;
+  height: 170px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* 계획(회색) 막대 */
+.proc-bar--plan {
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  border-radius: 5px;
+  background-color: #eeeeee; /* 계획: EEEEEE */
+}
+
+/* 실적(파랑) 막대 */
+.proc-bar--actual {
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  border-radius: 0px;
+  background-color: #5CB6FF; /* 실적: 005FEB */
+}
+/* Cernavoda */
+body.theme-cernavoda .proc-bar--actual {
+  background-color: #FF9D5C;
+}
+/* X축 라벨 (짧은 이름만) */
+.proc-bar-label {
+  font-size: 11px;
+  text-align: center;
+  white-space: nowrap;
+}
+.delay-con {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300;
+  font-size: 20px;
+  align-items: center;
+  height: 130px;
+  overflow-y: auto;         /* 영역 넘치면 마우스 휠 스크롤 */
+  overflow-x: hidden;
+  padding: 0 10px;
+}
+.delay-label {
+  font-weight: 400;
+  margin-right: 7px;
+  font-size: 20px;
+}
+.delay-item {
+  margin-bottom: 8px;
+}
+/* 스크롤바 얇게 (크롬 기준) */
+.delay-con::-webkit-scrollbar {
+  width: 6px;
+}
+.delay-con::-webkit-scrollbar-thumb {
+  background: #cfcfcf;
+  border-radius: 3px;
+}
+.delay-con::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============= menubar.html ============= */
+.menu {
+  background: #005EB8;
+  height: 100vh;
+  width: 160px;
+  text-align: center;
+}
+.logo {
+  padding-top: 20px;
+  width: 110px;
+}
+.menu-inner {
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+/* 공통 메뉴 스타일 */
+.menu-item {
+  display: flex;
+  align-items: center;      
+  justify-content: flex-start;
+  gap: 12px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+}
+/* 선택된 메뉴 */
+.menu-item.active {
+  background: #fff;
+  color: #005EB8;
+  font-weight: 900;
+}
+/* 아이콘 박스 */
+.menu-icon {
+  display: flex;
+  align-items: center;
+}
+.menu-icon img {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+/* active일 때 흰 PNG 아이콘을 파란색으로 보이게 */
+.menu-item.active .menu-icon img {
+  filter: brightness(0) saturate(100%)
+          invert(26%) sepia(94%) saturate(2259%)
+          hue-rotate(199deg) brightness(94%) contrast(101%);
+}
+.menu-item:hover {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+/* ============= project.html ============= */
+/*################## 슬라이드 ################## */
+/* 슬라이더 전체 영역 */
+.progress-slider {
+  position: relative;
+  background: #f7f9fc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.layout-right {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#content-wrap {
+  flex: 1;                     /* 나머지 영역 전체 차지 */
+  min-height: 0;               /* overflow 버그 방지 (중요!) */
+  padding: 0 20px;
+}
+/* 가로 슬라이드 컨테이너 */
+.progress-slides {
+  display: flex;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+/* 각 슬라이드 한 장 */
+.progress-slide {
+  flex: 0 0 100%;
+  width: 100%;
+}
+/* 슬라이드 내부 2열 레이아웃 (왼쪽/오른쪽) */
+.slide-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr; /* 비율은 원하는대로 조정 */
+  width: 100%;
+  max-width: 1600px;
+  column-gap: 16px;
+}
+/* 왼쪽 2단 */
+.slide-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* 오른쪽 큰 카드 */
+.slide-right {
+  display: flex;
+}
+/* 카드 공통 스타일 (박스) */
+.card {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  padding: 15px 35px;
+}
+/* small / large 높이 예시 */
+.card-small {
+  min-height: 300px;
+}
+.card-small:nth-child(2) {
+  flex: 2;
+}
+.card-small:nth-child(1) {
+  flex: 1;
+}
+.card-large {
+  min-height: 340px;
+  flex: 2;
+}
+/* 2번째 슬라이드처럼 색만 다르게 하고 싶을 때 */
+.card.alt {
+  border-top: 4px solid #66a9df; /* 예시 */
+}
+/* 오른쪽 next 버튼 */
+.slider-next {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 9999;
+}
+/* 하단 점 표시 */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 30px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d9d9d9;     /* 기본 회색 */
+}
+.slider-dots .dot.active {
+  background: #66a9df;     /* 선택된 파랑 */
+}
+
+/* =========================
+   카드1 전용 스코프
+   ========================= */
+[id^="card-total-progress1"] {
+  /* 축 오프셋: 라벨 32px + gap 8px = 40px */
+  --axis-left: 40px;
+  /* 하단 라벨 y 위치 */
+  --axis-bottom: 1px;
+  /* 점선이 라벨을 침범하지 않게 하는 하단 여백 */
+  --grid-bottom-gap: 30px;
+}
+/* 카드2 전용 축 오프셋 (공정명 영역 고려) */
+[id^="card-total-progress2"]{
+  --axis-left: 133px;       
+  --x-label-h: 18px;
+  --grid-bottom-gap: var(--x-label-h);
+}
+
+/* =========================
+   카드1: 차트 컨테이너
+   ========================= */
+[id^="card-total-progress1"] .bar-chart-horizontal,
+[id^="card-total-progress2"] .bar-chart-horizontal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 40px;
+}
+[id^="card-total-progress1"] .bar-chart-horizontal {
+  gap: 43px;
+}
+#card-total-progress2 .bar-chart-horizontal{
+}
+
+/* =========================
+   카드1: 점선 그리드 (0~100 선 기준)
+   ========================= */
+[id^="card-total-progress1"] .bar-chart-horizontal::before,
+[id^="card-total-progress2"] .bar-chart-horizontal::before{
+  content: "";
+  position: absolute;
+  inset: 0 0 var(--grid-bottom-gap) var(--axis-left);
+
+ background-image:
+    /* 100% 수직선(맨 오른쪽) */
+    linear-gradient(to right, transparent calc(100% - 1px), #ececec calc(100% - 1px), #ececec 100%),
+    /* 기존 0~90% 선들 */
+    linear-gradient(to right,
+      #ececec 0%,   #ececec 1px,  transparent 1px,  transparent 10%,
+      #ececec 10%,  #ececec calc(10% + 1px), transparent calc(10% + 1px), transparent 20%,
+      #ececec 20%,  #ececec calc(20% + 1px), transparent calc(20% + 1px), transparent 30%,
+      #ececec 30%,  #ececec calc(30% + 1px), transparent calc(30% + 1px), transparent 40%,
+      #ececec 40%,  #ececec calc(40% + 1px), transparent calc(40% + 1px), transparent 50%,
+      #ececec 50%,  #ececec calc(50% + 1px), transparent calc(50% + 1px), transparent 60%,
+      #ececec 60%,  #ececec calc(60% + 1px), transparent calc(60% + 1px), transparent 70%,
+      #ececec 70%,  #ececec calc(70% + 1px), transparent calc(70% + 1px), transparent 80%,
+      #ececec 80%,  #ececec calc(80% + 1px), transparent calc(80% + 1px), transparent 90%,
+      #ececec 90%,  #ececec calc(90% + 1px), transparent calc(90% + 1px), transparent 100%
+    );
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* =========================
+   카드1: 각 행 (라벨 + 트랙)
+   ========================= */
+[id^="card-total-progress1"] .bar-row{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;      /* axis-left 계산에 포함 */
+  z-index: 2;    /* 점선 위로 */
+}
+
+[id^="card-total-progress1"] .bar-label{
+  width: 32px;
+  text-align: center;
+  font-size: 14px;
+}
+
+[id^="card-total-progress1"] .bar-track{
+  width: 100%;
+  flex: 1;
+  position: relative;
+  height: 40px;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.bar{
+  height: 100%;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+[id^="card-total-progress1"] .bar-plan{ background-color: #5CB6FF; }
+[id^="card-total-progress1"] .bar-actual{ background-color: #95E1FB; }
+
+
+/* =========================
+   카드1: 하단 라벨 (선 위치에 정확히 배치)
+   - flex + space-between + transform 보정
+   ========================= */
+[id^="card-total-progress1"] .bar-x-labels,
+[id^="card-total-progress2"] .bar-x-labels{
+  position: absolute;
+  left: var(--axis-left);
+  right: 0;
+  bottom: var(--axis-bottom);
+
+  height: 17px;            
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* 라벨은 전부 절대배치 */
+[id^="card-total-progress1"] .bar-x-labels span,
+[id^="card-total-progress2"] .bar-x-labels span{
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+/* 양끝은 예외 처리 */
+#card-total-progress1 .bar-x-labels span[data-pct="0"]{
+  /* left: 0%;
+  transform: none; */
+}
+#card-total-progress1 .bar-x-labels span[data-pct="100"]{
+  /* left: 100%;
+  transform: translateX(-100%); */
+}
+
+/* =========================
+   카드 헤더(공통) — 필요 시 유지
+   ========================= */
+.card-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.sl{
+  top: 2px;
+  position: relative;
+  width: 6px;
+  height: 22px;
+  background: #686D78;
+  margin-right: 7px;
+}
+
+.card-title{
+  display: flex;
+  font-size: 16px;
+  gap: 10px;
+}
+
+.card-title span{
+  color: #005EB8;
+}
+
+/* 배지: HTML ID에 맞춰 카드1로 스코프 권장 */
+[id^="card-total-progress1"] .card-badge{
+  font-size: 11px;
+  color: #ffffff;
+  background: #0c0936;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* 툴팁(사용 시) */
+.bar-tooltip{
+  position: fixed;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #0c0936;
+  color: #ffffff;
+  font-size: 11px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(8px, 8px);
+  transition: opacity 0.1s ease;
+  z-index: 9999;
+}
+
+/* 기본(피커링) */
+.progress-slide[data-plant="pickering"] .bar-actual { background: #95E1FB; }
+.progress-slide[data-plant="pickering"] .bar-plan   { background: #5CB6FF; }
+
+/* 체르나보다 */
+.progress-slide[data-plant="cernavoda"] .bar-actual { background: #FF9D5C; }
+.progress-slide[data-plant="cernavoda"] .bar-plan   { background: #FFD9A3; }
+.progress-slide[data-plant="cernavoda"] .dot-actual { background: #FF9D5C; }
+.progress-slide[data-plant="cernavoda"] .dot-plan   { background: #FFD9A3; }
+
+
+/* =========================카드2: 공정별 계획대비 진도율 ========================= */
+/* 카드2: x축 라벨 높이 고정 + 차트 패딩 확보 */
+[id^="card-total-progress2"]{
+  --x-label-h: 18px;
+  --grid-bottom-gap: var(--x-label-h);
+}
+
+[id^="card-total-progress2"] .bar-chart-horizontal{
+  padding-top: 12px;
+  padding-bottom: calc(var(--x-label-h) + 6px);
+  overflow: visible;
+  min-height: 120px;
+  /* ? */
+}
+
+[id^="card-total-progress2"] .bar-x-labels{
+  height: var(--x-label-h);
+  bottom: 0;
+}
+[id^="card-total-progress2"] .card-legend{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-size: 14px;
+  color: #6b7280; /* 필요시 조정 */
+}
+[id^="card-total-progress2"] .legend-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+[id^="card-total-progress2"] .dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+[id^="card-total-progress2"] .dot-actual{ background:#95E1FB; }
+[id^="card-total-progress2"] .dot-plan{ background:#4DA3FF; }
+/* 카드2: 공정 1행(좌측 공정명 + 우측 2개 바) */
+[id^="card-total-progress2"] .proc-row{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2; /* 점선 위 */
+  margin-bottom: 18px;
+}
+
+/* 공정명 라벨 */
+[id^="card-total-progress2"] .proc-label{
+  width: 90px;          /* 공정명 길이 보고 조절 */
+  font-size: 12px;
+  color: #111827;
+  text-align: right;
+  padding-right: 8px;
+  white-space: nowrap;
+}
+
+/* 우측: 2개 막대(실적/계획) 스택 */
+[id^="card-total-progress2"] .proc-bars{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 각 막대 트랙 */
+[id^="card-total-progress2"] .bar-track{
+  height: 15px;          
+  border-radius: 5px;
+  background: transparent;
+  position: relative;
+  overflow: visible;
+}
+
+/* 카드2 색상 */
+[id^="card-total-progress2"] .bar-actual{ background:#95E1FB; }
+[id^="card-total-progress2"] .bar-plan{ background:#4DA3FF; }
+
+
+/* ============= Real-time Progress Status ============= */
+/* 6개 카드 배치 (3열 x 2행) */
+.proc-donut-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 30px;
+}
+.proc-donut-card {
+  padding: 15px 20px;
+}
+/* 카드 내부 */
+.proc-donut-title{
+  font-size: 18px;
+  color: #686D78;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+.proc-donut-divider{
+  height: 2px;
+  background: #EEEEEE;
+  margin: 10px 0 12px;
+}
+.proc-donut-body{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+}
+.proc-donut-canvas-wrap{
+  width: 120px;
+  height: 120px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.proc-donut-canvas{
+  width: inherit;
+  height: inherit;
+  display: block;
+}
+/* 오른쪽 숫자 영역 */
+.proc-donut-metrics{
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  row-gap: 6px;
+  align-items: baseline;
+}
+.proc-donut-metrics dt{
+  margin: 0;
+  color: #686D78;
+  font-size: 16px;
+}
+.proc-donut-metrics dd{
+  margin: 0;
+  color: #111;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: right;
+  min-width: 54px;
+}
+
+
+/* ============================ feeder.html============================ */
+.feeder-btn-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+.feeder-btns {
+  display: flex;
+  gap: 15px;
+  width: 60%;
+}
+.feeder-btn {
+  background: #fff;
+  border: 1px solid #005EB8;
+  flex: 1;
+  text-align: center;
+  border-radius: 5px;
+  color: #005EB8;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.feeder-btn.active {
+  background: #005EB8;
+  color: #ffffff;
+  font-weight: 500;
+}
+.feeder-mount{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.feeder-bg{
+  width: 100%;
+  height: auto;
+}
+.feeder-overlay{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto; /* hover/tooltip 쓰려면 */
+}
+.feeder-hole{
+  cursor: pointer;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+.feeder-hole:hover{
+  opacity: 0.85;
+  transform: scale(1.05);
+}
+/* feeder overlay */
+#feederMount{
+  position: relative;
+  width: 100%;
+  max-width: 1201px;
+  margin: 0 auto;
+  height: auto;
+}
+/* 이미지가 레이아웃 높이를 결정 */
+#feederMount .feeder-bg{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* svg는 이미지 박스를 그대로 덮음 */
+#feederMount svg.feeder-overlay{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 2;
+}
+svg.setAttribute("preserveAspectRatio", "xMidYMid meet");

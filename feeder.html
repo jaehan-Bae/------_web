@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+  <!-- 더미데이터 -->
+  <script src="./js/dummy-data.js" defer></script>
+  <!-- 컬러 규칙 -->
+  <script src="./js/color-rules.js" defer></script>
+  <!-- 도넛 차트 -->
+  <script src="./js/donut.js" defer></script>
+  <!-- 피더 공정 필터링 -->
+  <script src="./js/feeder/feeder-weekly-config.js" defer></script>
+  <!-- 피더 위클리 차트 -->
+  <script src="./js/feeder/feeder-weekly-chart.js" defer></script>
+  <!-- 레이아웃 -->
+  <script src="./js/layout.js" defer></script>
+  <!-- feeder 페이지 전용 엔트리 -->
+  <script src="./js/feeder/feeder-page.js" defer></script>
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebar"></div>
+
+    <div class="layout-main">
+      <div id="header"></div>
+
+    <main id="content-wrap">
+      <!-- 탭 -->
+      <div class="feeder-btn-wrap">
+        <div class="feeder-btns">
+          <button class="feeder-btn active" data-context="pickering-upper" type="button">Pic-upper</button>
+          <button class="feeder-btn" data-context="pickering-middle" type="button">Pic-middle</button>
+          <button class="feeder-btn" data-context="pickering-lower" type="button">Pic-lower</button>
+          <button class="feeder-btn" data-context="cernavoda-upper" type="button">Cer-upper</button>
+          <button class="feeder-btn" data-context="cernavoda-lower" type="button">Cer-lower</button>
+        </div>
+      </div>
+
+      <div class="hline"></div>
+
+      <!-- 본문: 좌(원판) / 우(카드3개) -->
+      <section class="feeder-sec">
+        <article class="feeder-img">
+          <div class="feeder-tools">
+            <button type="button" id="demoBtn">Demo: random statuses</button>
+            <button type="button" id="resetBtn">Reset</button>
+          </div>
+
+          <div id="feederMount" class="feeder-mount">
+              <img class="feeder-bg" src="./images/feeder.png" alt="Feeder" />
+          </div>
+        </article>
+        <!-- <div class="vline"></div> -->
+        <article class="feeder-info">
+          <!-- 1) 요약 + 도넛 -->
+        <div class="feeder-info1 feeder-card bc" data-role="summary-card">
+          <!-- LEFT -->
+          <div class="feeder-left">
+            <div class="feeder-title-row">
+              <span class="feeder-title-main" data-field="title"></span>
+              <span class="feeder-stitle" data-field="subtitle"></span>
+            </div>
+
+            <div class="feeder-body-row">
+              <!-- donut -->
+              <div class="feeder-donut-con">
+                <div class="feeder-ring">
+                  <canvas class="feeder-canvas" width="130" height="130"></canvas>
+                  <span class="feeder-percent" data-field="percent"></span>
+                </div>
+                <!-- 목표/달성 -->
+                <div class="feeder-kpi">
+                  <div class="kpi-row">
+                    <span class="kpi-label">목표</span>
+                    <b class="kpi-value" data-field="total"></b>
+                  </div>
+                  <div class="kpi-row">
+                    <span class="kpi-label">달성</span>
+                    <b class="kpi-value" data-field="produced"></b>
+                  </div>
+                </div>
+              </div>
+
+              <!-- divider -->
+              <div class="feeder-divider"></div>
+
+              <!-- right mini bars -->
+              <div class="feeder-mini-bars">
+                <div class="mini-row">
+                  <span class="mini-label">UPPER</span>
+                  <div class="mini-track">
+                    <div class="mini-fill mini-fill-upper" data-role="mini-upper"></div>
+                  </div>
+                    <span class="mini-pct" data-role="mini-upper-pct">0%</span>
+                </div>
+
+                <div class="mini-row">
+                  <span class="mini-label">MIDDLE</span>
+                  <div class="mini-track">
+                    <div class="mini-fill mini-fill-middle" data-role="mini-middle"></div>
+                  </div>
+                    <span class="mini-pct" data-role="mini-middle-pct">0%</span>
+                </div>
+
+                <div class="mini-row">
+                  <span class="mini-label">LOWER</span>
+                  <div class="mini-track">
+                    <div class="mini-fill mini-fill-lower" data-role="mini-lower"></div>
+                  </div>
+                    <span class="mini-pct" data-role="mini-lower-pct">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <!-- 2) 공정별 진행현황 -->
+          <div class="feeder-info2 feeder-card bc" data-role="weekly-card">
+            <div class="proc-header-row">
+              <div class="feeder-title-row">
+                <span class="sl-mw"></span>
+                <div class="feeder-title-main">공정별 진행현황</div>
+                <span class="feeder-stitle">(Weekly 기준)</span>
+              </div>
+            </div>
+
+          <div class="proc-bar-chart" id="procBarChartWrap">
+            <div class="proc-plot">
+              <svg class="proc-grid" aria-hidden="true"></svg>
+              <div id="procBarChart"></div>
+            </div>
+          </div>
+            <div class="proc-legend">
+              <span class="proc-legend-item">
+                <span class="proc-legend-dot proc-legend-dot--plan"></span>
+                <span class="proc-legend-label">계획</span>
+              </span>
+              <span class="proc-legend-item">
+                <span class="proc-legend-dot proc-legend-dot--actual"></span>
+                <span class="proc-legend-label">실적</span>
+              </span>
+              <span class="proc-legend-item">
+                <span class="proc-legend-dot proc-legend-dot--daily"></span>
+                <span class="proc-legend-label">일간</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- 3) 지연 공정 -->
+          <div class="feeder-info3 feeder-card bc" data-role="delay-card">
+            <div class="proc-header-row">
+              <div class="feeder-title-row">
+                <span class="feeder-title-main"><img src="images/warning.png" alt=""> 공정 지연 현황</span>
+              </div>
+            </div>
+            <div class="delay-con">
+              <!-- data-code 연결하면 됨 -->
+              <div class="delay-left">
+                <div class="delay-item" data-code="A09W" data-proc="PBC" data-status="delayed">
+                  <span class="delay-label">A09W / PBC</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+                <div class="delay-item" data-code="C13F" data-proc="ADAPTOR" data-status="delayed">
+                  <span class="delay-label">C13F / Adaptor</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+                <div class="delay-item" data-code="O02Z" data-proc="LRB" data-status="delayed">
+                  <span class="delay-label">O02Z / LRB</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+              </div>
+              <div class="vline"></div>
+              <div class="delay-right">
+                <div class="delay-item" data-code="E02P" data-proc="P+PBO" data-status="delayed">
+                  <span class="delay-label">E02P / P+PBO</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+                <div class="delay-item" data-code="R19F" data-proc="FIN" data-status="delayed">
+                  <span class="delay-label">R19F / FIN</span>
+                  <span class="status-delayed">delayed</span>
+                </div>
+
+                <div class="delay-item" data-code="H13W" data-proc="DEF" data-status="delayed">
+                  <span class="delay-label">H13W / DEF</span><span class="status-delayed">delayed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+    <!-- js -->
+    </div>
+  </div>
+</body>
+</html>

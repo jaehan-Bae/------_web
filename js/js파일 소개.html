@@ -1,0 +1,33 @@
+
+[layout.js]
+   └─ 페이지 뼈대 구성
+
+[progress-slider.js]
+   └─ 슬라이드 이동
+       └─ progress:slideChange 이벤트
+
+[project-total-progress.js]
+   └─ 이벤트 수신
+       ├─ 바차트 렌더
+       └─ donut.js 호출
+
+[donut.js]
+   └─ 도넛 차트 렌더 (순수)
+
+[dummy-data.js / color-rules.js]
+   └─ 데이터 & 규칙 공급
+
+
+
+################# feeder 페이지 #################   
+feeder.html
+→ Feeder 웹 페이지의 전체 레이아웃 HTML.
+
+feeder-page.js
+→ Feeder 페이지에서 공정(피커링,체르보나다) 변경에 따라 모든 영역 렌더링을 총괄하는 컨트롤러.
+
+feeder-weekly-config.js
+→ 주간 공정 차트에 사용되는 공정별 데이터 매핑 / 정적 설정 / 필터 규칙 정의 파일.
+
+feeder-weekly-chart.js
+→ 주간 공정 데이터를 받아 차트 DOM(막대 / 그리드 / 라벨)을 실제로 그리는 렌더링 전용 모듈.
