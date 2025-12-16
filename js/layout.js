@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1) sidebar 로드
-  fetch("/sidebar.html")
+  fetch("./sidebar.html")
     .then((res) => res.text())
     .then((html) => {
       const sidebarEl = document.getElementById("sidebar");
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // 2) header 로드
-  fetch("/header.html")
+  fetch("./header.html")
     .then((res) => res.text())
     .then((html) => {
       const headerEl = document.getElementById("header");
