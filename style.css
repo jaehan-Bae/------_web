@@ -127,9 +127,9 @@ header {
 .feeder-img {
   flex: 4;
   text-align: center;
+  height: 70vh;
 }
 .feeder-img img {
-  width: 99%;
 }
 .bc {
   background: #fff;
