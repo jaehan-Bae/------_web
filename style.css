@@ -88,7 +88,7 @@ header {
   height: 28px;
   border-radius: 50%;
   overflow: hidden;
-  background: url("/images/person.png") center/cover no-repeat;
+  background: url("./images/person.png") center/cover no-repeat;
 }
 /* 실제 유저 사진이 있을 때 (img가 있으면 그걸로 덮어씀) */
 .avatar img {
