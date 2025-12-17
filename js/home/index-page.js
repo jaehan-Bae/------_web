@@ -1,5 +1,6 @@
 // js/pages/index-page.js
 document.addEventListener("DOMContentLoaded", () => {
+  // ===== 1) Summary cards (Pickering / Cernavoda) =====
   const pickeringCard = document.querySelector('[data-card="pickering"]');
   const cernavodaCard = document.querySelector('[data-card="cernavoda"]');
 
@@ -9,13 +10,31 @@ document.addEventListener("DOMContentLoaded", () => {
   if (pickeringCard && pickModel && window.renderSummaryCardInto) {
     window.renderSummaryCardInto(pickeringCard, pickModel);
   }
-
-  // ============ weklly, monthly small kpi cards ============
   if (cernavodaCard && cerModel && window.renderSummaryCardInto) {
     window.renderSummaryCardInto(cernavodaCard, cerModel);
   }
 
-    const smallIds = [
+  // ===== 2) Process cards (left/right) =====
+  const pickEl = document.querySelector('[data-role="proc-card"][data-plant="pickering"]');
+  const cerEl  = document.querySelector('[data-role="proc-card"][data-plant="cernavoda"]');
+
+  if (pickEl && cerEl && window.adaptProcWeeklyRows && window.renderProcCard) {
+    const pickRows = window.adaptProcWeeklyRows("pickering");
+    const cerRows  = window.adaptProcWeeklyRows("cernavoda");
+
+    window.renderProcCard(pickEl, "PICKERING", pickRows);
+    window.renderProcCard(cerEl, "CERENAVODA", cerRows);
+  } else {
+    console.warn("[proc] missing elements or functions", {
+      pickEl: !!pickEl,
+      cerEl: !!cerEl,
+      adaptProcWeeklyRows: typeof window.adaptProcWeeklyRows,
+      renderProcCard: typeof window.renderProcCard
+    });
+  }
+
+  // ===== 3) Weekly/Monthly small KPI cards =====
+  const smallIds = [
     "weekly-pickering",
     "weekly-cernavoda",
     "monthly-pickering",

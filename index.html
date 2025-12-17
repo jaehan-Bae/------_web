@@ -9,16 +9,18 @@
   <script src="./js/color-rules.js"></script>
   <!-- 차트 그리는 함수 (원형/막대) -->
   <script src="./js/donut.js"></script>
-  <!-- 홈 페이지 전용 렌더러 -->
-  <script src="./js/home/summary-card-renderer.js"></script>
   <!-- 홈 페이지 전용어답터 -->
   <script src="./js/home/summary-adapter.js"></script>
-  <!-- 홈 페이지 실행 -->
-  <script src="./js/home/index-page.js"></script>
-  <!-- 위클리 먼슬리 랜더러 -->
-  <script src="./js/home/small-kpi-renderer.js"></script>
+  <!-- 홈 페이지 전용 렌더러 -->
+  <script src="./js/home/summary-card-renderer.js"></script>
   <!-- 위클리 먼슬리 어답터 -->
   <script src="./js/home/small-kpi-adapter.js"></script>
+  <script src="./js/home/small-kpi-renderer.js"></script>
+  <!-- 모든 공정 랜더러 / 어답터 -->
+  <script src="./js/home/progress-all-adapter.js"></script>
+  <script src="./js/home/progress-all-renderer.js"></script>
+  <!-- 홈 페이지 실행 -->
+  <script src="./js/home/index-page.js"></script>
   <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="./style.css">
   <title>피더파이프 제조 현황</title>
@@ -35,8 +37,31 @@
             <div class="main-left">
               <!-- 맵 -->
               <div class="map-space">
+                <div class="map-markers">
+                  <!-- 지도 표시 마커 레이어 -->
+                  <div class="map-marker m-canada">
+                    <span class="map-marker__label">Canada</span>
+                    <span class="map-marker__dot dots--c2"></span>
+                  </div>
+
+                  <div class="map-marker m-romania">
+                    <span class="map-marker__label">Romania</span>
+                    <span class="map-marker__dot dots--c1"></span>
+                  </div>
+
+                  <div class="map-marker m-china">
+                    <span class="map-marker__label">China</span>
+                    <span class="map-marker__dot dots--p2"></span>
+                  </div>
+
+                  <div class="map-marker m-korea">
+                    <span class="map-marker__label">Korea</span>
+                    <span class="map-marker__dot dots--p1"></span>
+                  </div>
+                </div>
                 <!-- 두산 에너빌리티 공급 실적 -->
                 <div class="map-notice">
+                  <!-- map-notice2 / 왼쪽 -->
                   <div class="map-notice1">
                     <div class="map-icon">
                       <div class="map-icon-head">
@@ -44,7 +69,39 @@
                         두산 에너빌리티 공급 실적
                       </div>
                       <div class="map-icon-body">
+                        <div class="notice-group">
+                          <div class="notice-country">
+                            <span class="dots dots--p1"></span>
+                            <span class="country-name">한국</span>
+                          </div>
+                          <div class="notice-items">
+                            <div class="notice-item">월성#1 Feeder RFR</div>
+                            <div class="notice-item">월성#2 ~ 4 Feeder</div>
+                          </div>
+                        </div>
+
+                        <div class="notice-group">
+                          <div class="notice-country">
+                            <span class="dots dots--p2"></span>
+                            <span class="country-name">중국</span>
+                          </div>
+                          <div class="notice-items">
+                            <div class="notice-item">Qinshan #1,2 Feeder</div>
+                          </div>
+                        </div>
+                        <!-- map-notice2 / 오른쪽 -->
+                        <div class="notice-group">
+                          <div class="notice-country">
+                            <span class="dots dots--p3"></span>
+                            <span class="country-name">캐나다</span>
+                          </div>
+                          <div class="notice-items">
+                            <div class="notice-item">Point Lepreau RFR</div>
+                            <div class="notice-item">Bruce #6 Feeder RFR</div>
+                          </div>
+                        </div>
                       </div>
+
                     </div>
                   </div>
                   <div class="map-notice2">
@@ -53,6 +110,28 @@
                         <img src="./images/settings.png" alt="">
                         전세계 피더 현황
                       </div>
+                      <div class="map-icon-body">
+                        <div class="notice-group">
+                          <div class="notice-country">
+                            <span class="dots dots--c1"></span>
+                            <span class="country-name">루마니아</span>
+                          </div>
+                          <div class="notice-items">
+                            <div class="notice-item">Cernavoda #1,2 Feeder RFR</div>
+                          </div>
+                        </div>
+
+                        <div class="notice-group">
+                          <div class="notice-country">
+                            <span class="dots dots--c2"></span>
+                            <span class="country-name">캐나다</span>
+                          </div>
+                          <div class="notice-items">
+                            <div class="notice-item">Pickering #5-8 Feeder</div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -154,7 +233,9 @@
                       <!-- A묶음: value + spark (가로, gap) -->
                       <div class="small-kpi__top">
                         <div data-field="value" class="small-kpi__value">650</div>
-                        <canvas class="spark" width="90" height="32"></canvas>
+                          <div class="spark-box" data-field="spark-box">
+                          <canvas class="spark"></canvas>
+                        </div>
                       </div>
 
                       <!-- B묶음: label + delta (세로로 한 묶음) -->
@@ -172,7 +253,9 @@
                     <div class="small-kpi__body">
                       <div class="small-kpi__top">
                         <div data-field="value" class="small-kpi__value">650</div>
-                        <canvas class="spark" width="90" height="32"></canvas>
+                          <div class="spark-box" data-field="spark-box">
+                          <canvas class="spark"></canvas>
+                        </div>
                       </div>
 
                       <div class="small-kpi__meta">
@@ -189,7 +272,9 @@
                     <div class="small-kpi__body">
                       <div class="small-kpi__top">
                         <div data-field="value" class="small-kpi__value">650</div>
-                        <canvas class="spark" width="90" height="32"></canvas>
+                          <div class="spark-box" data-field="spark-box">
+    <canvas class="spark"></canvas>
+  </div>
                       </div>
 
                       <div class="small-kpi__meta">
@@ -206,7 +291,9 @@
                     <div class="small-kpi__body">
                       <div class="small-kpi__top">
                         <div data-field="value" class="small-kpi__value">650</div>
-                        <canvas class="spark" width="90" height="32"></canvas>
+                          <div class="spark-box" data-field="spark-box">
+                          <canvas class="spark"></canvas>
+                        </div>
                       </div>
 
                       <div class="small-kpi__meta">
@@ -222,15 +309,54 @@
               <div class="progress-all">
                 <div class="progress-wrap">
                   <div class="progress-left card">
-                    dd
+                    <div class="proc-card" data-role="proc-card" data-plant="pickering"></div>
                   </div>
+
                   <div class="progress-right card">
-                    작업 중입니다
+                    <div class="proc-card" data-role="proc-card" data-plant="cernavoda"></div>
                   </div>
                 </div>
               </div>
               <div class="progress-delayed">
+                <div class="feeder-info3 feeder-card card" data-role="delay-card">
+                  <div class="proc-header-row">
+                    <div class="feeder-title-row">
+                      <span class="feeder-title-main"><img src="./images/warning.png" alt=""> 공정 지연 현황</span>
+                    </div>
+                  </div>
+                  <div class="delay-con">
+                    <!-- data-code 연결하면 됨 -->
+                    <div class="delay-left">
+                      <div class="delay-item" data-code="A09W" data-proc="PBC" data-status="delayed">
+                        <span class="delay-label">A09W / PBC</span>
+                        <span class="status-delayed">delayed</span>
+                      </div>
+                      <div class="delay-item" data-code="C13F" data-proc="ADAPTOR" data-status="delayed">
+                        <span class="delay-label">C13F / Adaptor</span>
+                        <span class="status-delayed">delayed</span>
+                      </div>
+                      <div class="delay-item" data-code="O02Z" data-proc="LRB" data-status="delayed">
+                        <span class="delay-label">O02Z / LRB</span>
+                        <span class="status-delayed">delayed</span>
+                      </div>
+                    </div>
+                    <div class="vline"></div>
+                    <div class="delay-right">
+                      <div class="delay-item" data-code="E02P" data-proc="P+PBO" data-status="delayed">
+                        <span class="delay-label">E02P / P+PBO</span>
+                        <span class="status-delayed">delayed</span>
+                      </div>
+                      <div class="delay-item" data-code="R19F" data-proc="FIN" data-status="delayed">
+                        <span class="delay-label">R19F / FIN</span>
+                        <span class="status-delayed">delayed</span>
+                      </div>
 
+                      <div class="delay-item" data-code="H13W" data-proc="DEF" data-status="delayed">
+                        <span class="delay-label">H13W / DEF</span><span class="status-delayed">delayed</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
