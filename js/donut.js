@@ -1,4 +1,4 @@
-function drawFeederDonut(canvas, percent, colors) {
+function drawFeederDonut(canvas, percent, colors, style = {}) {
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
@@ -14,7 +14,7 @@ function drawFeederDonut(canvas, percent, colors) {
   ctx.beginPath();
   ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
   ctx.strokeStyle = "#eeeeee";
-  ctx.lineWidth = 20;
+  ctx.lineWidth = style?.lineWidth ?? 20;
   ctx.lineCap = "round";
   ctx.stroke();
 
@@ -236,7 +236,7 @@ function renderProcDonutGrid(gridElOrId, plantId, plantName = "") {
 
     const percent = calcPercent(item.actual, item.plan);
 
-    // 색 규칙: plantId 기준으로 기본값(네가 쓰던 규칙)
+    // 색 규칙: plantId 기준으로 기본값
     const colors =
       plantId === "pickering"
         ? { from: "#6CCBFF", to: "#2F7BEF" }

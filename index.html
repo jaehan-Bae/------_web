@@ -3,13 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
   <!-- 테스트 데이터 -->
   <script src="./js/dummy-data.js"></script>
   <!-- 색상 결정 규칙 -->
   <script src="./js/color-rules.js"></script>
   <!-- 차트 그리는 함수 (원형/막대) -->
   <script src="./js/donut.js"></script>
+  <!-- 홈 페이지 전용 렌더러 -->
+  <script src="./js/home/summary-card-renderer.js"></script>
+  <!-- 홈 페이지 전용어답터 -->
+  <script src="./js/home/summary-adapter.js"></script>
+  <!-- 홈 페이지 실행 -->
+  <script src="./js/home/index-page.js"></script>
+  <!-- 위클리 먼슬리 랜더러 -->
+  <script src="./js/home/small-kpi-renderer.js"></script>
+  <!-- 위클리 먼슬리 어답터 -->
+  <script src="./js/home/small-kpi-adapter.js"></script>
   <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="./style.css">
   <title>피더파이프 제조 현황</title>
@@ -51,19 +60,178 @@
               <!-- MAP BOTTOM -->
               <div class="map-bottom">
                 <div class="map-bottom-grid">
-                  <!-- Left big cards -->
-                  <div class="card card--big" data-card="pickering"></div>
-                  <div class="card card--big" data-card="cernavoda"></div>
+                  <!-- PICKERING -->
+                  <div class="card card--big" data-card="pickering">
+                    <div data-field="title">PICKERING</div>
+
+                    <div class="summary-row">
+                      <div class="donut-wrap">
+                        <canvas class="feeder-canvas" width="90" height="90"></canvas>
+                        <div class="donut-center"><span data-field="percent">80%</span></div>
+                      </div>
+
+                      <div class="summary-text">
+                        <div class="kv">
+                          <span class="k">목표</span><span class="v" data-field="total">740</span>
+                        </div>
+                        <div class="kv">
+                          <span class="k">달성</span><span class="v" data-field="produced">240</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="mini-row" data-line="upper">
+                      <div class="mini-label">UPPER</div>
+                      <div class="mini-track">
+                        <div class="mini-fill" data-role="mini-upper" style="width:80%;"></div>
+                      </div>
+                      <div class="mini-pct" data-role="mini-upper-pct">80%</div>
+                    </div>
+
+                    <div class="mini-row" data-line="middle">
+                      <div class="mini-label">MIDDLE</div>
+                      <div class="mini-track">
+                        <div class="mini-fill" data-role="mini-middle" style="width:40%;"></div>
+                      </div>
+                      <div class="mini-pct" data-role="mini-middle-pct">40%</div>
+                    </div>
+
+                    <div class="mini-row" data-line="lower">
+                      <div class="mini-label">LOWER</div>
+                      <div class="mini-track">
+                        <div class="mini-fill" data-role="mini-lower" style="width:60%;"></div>
+                      </div>
+                      <div class="mini-pct" data-role="mini-lower-pct">60%</div>
+                    </div>
+                  </div>
+
+                  <!-- CERNAVODA -->
+                  <div class="card card--big" data-card="cernavoda">
+                    <div data-field="title">CERNAVODA</div>
+                    <div class="summary-row">
+                      <div class="donut-wrap">
+                        <canvas class="feeder-canvas" width="90" height="90"></canvas>
+                        <div class="donut-center"><span data-field="percent">80%</span></div>
+                      </div>
+
+                      <div class="summary-text">
+                        <div class="kv">
+                          <span class="k">목표</span><span class="v" data-field="total">300</span>
+                        </div>
+                        <div class="kv">
+                          <span class="k">달성</span><span class="v" data-field="produced">120</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="mini-row" data-line="upper">
+                      <div class="mini-label">UPPER</div>
+                      <div class="mini-track">
+                        <div class="mini-fill" data-role="mini-upper" style="width:55%;"></div>
+                      </div>
+                      <div class="mini-pct" data-role="mini-upper-pct">55%</div>
+                    </div>
+
+                    <div class="mini-row" data-line="lower">
+                      <div class="mini-label">LOWER</div>
+                      <div class="mini-track">
+                        <div class="mini-fill" data-role="mini-lower" style="width:35%;"></div>
+                      </div>
+                      <div class="mini-pct" data-role="mini-lower-pct">35%</div>
+                    </div>
+                  </div>
 
                   <!-- Right small cards (2x2) -->
-                  <div class="card card--small" data-card="weekly-pickering"></div>
-                  <div class="card card--small" data-card="weekly-cernavoda"></div>
-                  <div class="card card--small" data-card="monthly-pickering"></div>
-                  <div class="card card--small" data-card="monthly-cernavoda"></div>
+                  <!-- 위클리 - 피커링 -->
+                  <div class="card card--small small-kpi" data-card="weekly-pickering">
+                    <div data-field="title">Weekly <span class="stitle">(Pickering)</span></div>
+
+                    <div class="small-kpi__body">
+                      <!-- A묶음: value + spark (가로, gap) -->
+                      <div class="small-kpi__top">
+                        <div data-field="value" class="small-kpi__value">650</div>
+                        <canvas class="spark" width="90" height="32"></canvas>
+                      </div>
+
+                      <!-- B묶음: label + delta (세로로 한 묶음) -->
+                      <div class="small-kpi__meta">
+                        <div data-field="label" class="small-kpi__label">이번 주 목표</div>
+                        <div data-field="delta" class="small-kpi__delta"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 위클리 - 체르나보다 -->
+                  <div class="card card--small small-kpi" data-card="weekly-cernavoda">
+                    <div data-field="title">Weekly <span class="stitle">(Cernavoda)</span></div>
+
+                    <div class="small-kpi__body">
+                      <div class="small-kpi__top">
+                        <div data-field="value" class="small-kpi__value">650</div>
+                        <canvas class="spark" width="90" height="32"></canvas>
+                      </div>
+
+                      <div class="small-kpi__meta">
+                        <div data-field="label" class="small-kpi__label">이번 주 목표</div>
+                        <div data-field="delta" class="small-kpi__delta"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 먼슬리 - 피커링 -->
+                  <div class="card card--small small-kpi" data-card="monthly-pickering">
+                    <div data-field="title">Monthly <span class="stitle">(Pickering)</span></div>
+
+                    <div class="small-kpi__body">
+                      <div class="small-kpi__top">
+                        <div data-field="value" class="small-kpi__value">650</div>
+                        <canvas class="spark" width="90" height="32"></canvas>
+                      </div>
+
+                      <div class="small-kpi__meta">
+                        <div data-field="label" class="small-kpi__label">이번 달 목표</div>
+                        <div data-field="delta" class="small-kpi__delta"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 먼슬리 - 체르나보다 -->
+                  <div class="card card--small small-kpi" data-card="monthly-cernavoda">
+                    <div data-field="title">Monthly <span class="stitle">(Cernavoda)</span></div>
+
+                    <div class="small-kpi__body">
+                      <div class="small-kpi__top">
+                        <div data-field="value" class="small-kpi__value">650</div>
+                        <canvas class="spark" width="90" height="32"></canvas>
+                      </div>
+
+                      <div class="small-kpi__meta">
+                        <div data-field="label" class="small-kpi__label">이번 달 목표</div>
+                        <div data-field="delta" class="small-kpi__delta"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="main-right">
+              <div class="progress-all">
+                <div class="progress-wrap">
+                  <div class="progress-left card">
+                    dd
+                  </div>
+                  <div class="progress-right card">
+                    작업 중입니다
+                  </div>
+                </div>
+              </div>
+              <div class="progress-delayed">
+
+              </div>
             </div>
           </div>
         </main>

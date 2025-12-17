@@ -150,10 +150,8 @@ header {
   top: 10px;
   width: 100%;
   height: calc(100% - 20px);
-
   background: url("./images/map-silhouette.png") no-repeat right center;
   background-size: cover;
-
   opacity: 0.9;             /* 스샷처럼 은은하게 */
   pointer-events: none;
   z-index: 0;
@@ -208,9 +206,220 @@ header {
 .card--big{
   grid-row: span 2;     /* 왼쪽 큰 카드 2행 */
   min-height: 360px;    /* 필요 시 조절 */
+  position: relative;
+}
+.card--big .feeder-canvas {
+  position: absolute;
+  top: 50px;
+  width: 100px;
+  height: 100px;
 }
 .card--small{
   min-height: 170px;
+}
+.card.card--big .mini-row{
+  display: grid;
+  grid-template-columns: 1fr 56px; /* 바 / 퍼센트 */
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.card.card--big [data-role^="mini-"]{
+  height: 10px;
+  border-radius: 6px;
+  /* 트랙(뒤) */
+  position: relative;
+}
+/* 지금은 바 자체가 fill div */
+.card.card--big [data-role="mini-upper"]{ background: #95E1FB; }
+.card.card--big [data-role="mini-middle"]{ background: #337DF6; }
+.card.card--big [data-role="mini-lower"]{ background: #006FE6; }
+.card.card--big [data-role$="-pct"]{
+  text-align: right;
+  font-size: 12px;
+  color: #111;
+}
+
+/* ========= 피커링, 체르노바다 전체 ========= */
+.progress-all {
+  display: flex;
+  flex: 3;
+  border: 1px solid #000;
+}
+.progress-delayed {
+  flex: 1;
+}
+.progress-wrap {
+  display: flex;
+  gap: 10px;
+}
+.progress-left {
+  flex: 1;
+  border: 1px solid #000;
+}
+.progress-right {
+  flex: 1;
+  border: 1px solid #000;
+}
+/* ########### 메인화면- 맵 밑의 토탈 카드 */
+.card.card--big{
+  padding: 15px;
+  display: grid;
+  /* 슬롯 고정: title / summary / divider / bars */
+  grid-template-rows: 24px 120px 1px auto;
+  row-gap: 10px;
+}
+/* title */
+.card.card--big [data-field="title"] {
+  height: 24px;                 /* 고정 */
+  display: grid;
+  place-items: center;
+  color: #686D78;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+/* summary row: donut + kv (높이 고정) */
+.card.card--big .summary-row{
+  height: 120px;                /* 고정 */
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  column-gap: 16px;
+}
+/* donut wrap 고정 */
+.card.card--big .donut-wrap{
+  width: 100px;
+  height: 100px;
+  position: relative;
+  justify-self: center;  /* 가로 중앙 */
+  align-self: center;    /* 세로 중앙 */
+}
+.card.card--big .donut-wrap .feeder-canvas{
+  position: absolute;
+  inset: 0;                     /* 중앙정렬 필요 없음 */
+  width: 100%;
+  height: 100%;
+}
+.card.card--big .donut-center{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #686D78;
+  pointer-events: none;
+}
+/* 목표/달성 텍스트 */
+.card.card--big .summary-text{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                     
+  font-size: 13px;
+  color: #686D78;
+}
+.card.card--big .summary-text .kv{
+  display: grid;
+  grid-template-columns: 34px auto;
+  align-items: baseline;
+  column-gap: 10px;
+}
+.card.card--big .summary-text .kv .v{
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+/* divider */
+.card.card--big .divider{
+  height: 1px;
+  background: #EEEEEE;
+}
+/* ===== mini bars: 3줄 슬롯 고정 + 간격 축소 ===== */
+.card.card--small [data-field="title"]{
+  height: 24px;                 /* 고정 */
+  display: flex;
+  justify-content: center;
+  color: #686D78;
+  font-weight: 600;
+  gap: 5px;
+}
+.card.card--big .mini-row{
+  display: grid;
+  grid-template-columns: 60px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  /* 줄 높이 고정 -> 카드마다 동일 */
+  min-height: 24px;
+}
+/* 줄 간격이 넓은 문제: row-gap로 제어(현재는 row-gap이 카드 전체에 걸림)
+   mini-row 사이 간격을 강제로 줄이려면 mini-row에 margin을 직접 주기 */
+.card.card--big .mini-row + .mini-row{
+  margin-top: 4px;               /* 간격 축소 */
+}
+.card.card--big .mini-label{
+  font-size: 12px;
+  color: #111827;
+}
+.card.card--big .mini-track{
+  height: 12px;
+  background: #EDEDED;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.card.card--big .mini-fill{
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+}
+.card.card--big .mini-pct{
+  text-align: right;
+  font-size: 12px;
+  color: #686D78;
+}
+/* CERNAVODA 카드 내부 mini-fill 색상 테마 */
+.card[data-card="cernavoda"] .mini-fill[data-role="mini-upper"]{
+  background: #FFC54E;
+}
+.card[data-card="cernavoda"] .mini-fill[data-role="mini-lower"]{
+  background: #FFA000;
+}
+/* ############ 위클리 먼슬리 4개 칸 */
+.card.card--small [data-field="title"] .stitle {
+  font-weight: 300;
+  font-size: 14px;
+}
+.card.card--small {
+  padding: 15px;
+}
+.small-kpi__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+.small-kpi__top {
+  display: flex;
+  justify-content: space-around;
+  flex: 2;
+}
+.small-kpi__top [data-field="value"] {
+  font-size: 24px;
+  font-weight: 500;
+}
+.small-kpi__meta {
+  flex: 1;
+}
+.small-kpi__label {
+  font-size: 12px;
+}
+.small-kpi__delta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.small-kpi__delta img {
+  width: 13px;
+  top: 2px;
 }
 
 
@@ -354,7 +563,6 @@ header {
 .mini-fill-lower  { background:#0C77EA; }
 /* 미니바-체르보나다 버전 */
 body.theme-cernavoda .mini-fill-upper  { background:#FFC54E; }
-body.theme-cernavoda .mini-fill-middle { background:#FFBE3A; }
 body.theme-cernavoda .mini-fill-lower  { background:#FFA000; }
 
 .hline {
@@ -1201,4 +1409,7 @@ body.theme-cernavoda .proc-bar--actual {
   pointer-events: none;
   z-index: 2;
 }
-svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+
+
+

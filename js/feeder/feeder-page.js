@@ -135,8 +135,8 @@ function renderSummaryCard(contextId, plantId, position) {
   if (canvas && typeof window.drawFeederDonut === "function") {
     const colors =
       plantId === "pickering"
-        ? { from: "#33C0FF", to: "#0047D4" }
-        : { from: "#FF9D5C", to: "#FF5F01" };
+        ? { from: "#6CCBFF", to: "#2F7BEF" }
+        : { from: "#FFC266", to: "#FF8A00" };
 
     window.drawFeederDonut(canvas, pct, colors);
   } else {
