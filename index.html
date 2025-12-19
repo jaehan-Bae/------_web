@@ -23,6 +23,7 @@
   <script src="./js/home/index-page.js"></script>
   <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./responsive.css">
   <title>피더파이프 제조 현황</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
         <div id="header"></div>
         <main id="content-wrap">
           <div class="main-wrap">
-            <!-- 종합 공정현황 왼쪽 -->
+            <!-- 메인 왼쪽 -->
             <div class="main-left">
               <!-- 맵 -->
               <div class="map-space">
@@ -108,7 +109,7 @@
                     <div class="map-icon">
                       <div class="map-icon-head">
                         <img src="./images/settings.png" alt="">
-                        전세계 피더 현황
+                        제작 진행 중
                       </div>
                       <div class="map-icon-body">
                         <div class="notice-group">
@@ -161,28 +162,30 @@
 
                     <div class="divider"></div>
 
-                    <div class="mini-row" data-line="upper">
-                      <div class="mini-label">UPPER</div>
-                      <div class="mini-track">
-                        <div class="mini-fill" data-role="mini-upper" style="width:80%;"></div>
+                    <div class="mini-bottom">
+                      <div class="mini-row" data-line="upper">
+                        <div class="mini-label">UPPER</div>
+                        <div class="mini-track">
+                          <div class="mini-fill" data-role="mini-upper" style="width:80%;"></div>
+                        </div>
+                        <div class="mini-pct" data-role="mini-upper-pct">80%</div>
                       </div>
-                      <div class="mini-pct" data-role="mini-upper-pct">80%</div>
-                    </div>
-
-                    <div class="mini-row" data-line="middle">
-                      <div class="mini-label">MIDDLE</div>
-                      <div class="mini-track">
-                        <div class="mini-fill" data-role="mini-middle" style="width:40%;"></div>
+  
+                      <div class="mini-row" data-line="middle">
+                        <div class="mini-label">MIDDLE</div>
+                        <div class="mini-track">
+                          <div class="mini-fill" data-role="mini-middle" style="width:40%;"></div>
+                        </div>
+                        <div class="mini-pct" data-role="mini-middle-pct">40%</div>
                       </div>
-                      <div class="mini-pct" data-role="mini-middle-pct">40%</div>
-                    </div>
-
-                    <div class="mini-row" data-line="lower">
-                      <div class="mini-label">LOWER</div>
-                      <div class="mini-track">
-                        <div class="mini-fill" data-role="mini-lower" style="width:60%;"></div>
+  
+                      <div class="mini-row" data-line="lower">
+                        <div class="mini-label">LOWER</div>
+                        <div class="mini-track">
+                          <div class="mini-fill" data-role="mini-lower" style="width:60%;"></div>
+                        </div>
+                        <div class="mini-pct" data-role="mini-lower-pct">60%</div>
                       </div>
-                      <div class="mini-pct" data-role="mini-lower-pct">60%</div>
                     </div>
                   </div>
 
@@ -207,20 +210,22 @@
 
                     <div class="divider"></div>
 
-                    <div class="mini-row" data-line="upper">
-                      <div class="mini-label">UPPER</div>
-                      <div class="mini-track">
-                        <div class="mini-fill" data-role="mini-upper" style="width:55%;"></div>
+                    <div class="mini-bottom">
+                      <div class="mini-row" data-line="upper">
+                        <div class="mini-label">UPPER</div>
+                        <div class="mini-track">
+                          <div class="mini-fill" data-role="mini-upper" style="width:55%;"></div>
+                        </div>
+                        <div class="mini-pct" data-role="mini-upper-pct">55%</div>
                       </div>
-                      <div class="mini-pct" data-role="mini-upper-pct">55%</div>
-                    </div>
-
-                    <div class="mini-row" data-line="lower">
-                      <div class="mini-label">LOWER</div>
-                      <div class="mini-track">
-                        <div class="mini-fill" data-role="mini-lower" style="width:35%;"></div>
+  
+                      <div class="mini-row" data-line="lower">
+                        <div class="mini-label">LOWER</div>
+                        <div class="mini-track">
+                          <div class="mini-fill" data-role="mini-lower" style="width:35%;"></div>
+                        </div>
+                        <div class="mini-pct" data-role="mini-lower-pct">35%</div>
                       </div>
-                      <div class="mini-pct" data-role="mini-lower-pct">35%</div>
                     </div>
                   </div>
 
@@ -305,54 +310,50 @@
                 </div>
               </div>
             </div>
+            <!-- 메인 오른쪽 -->
             <div class="main-right">
               <div class="progress-all">
-                <div class="progress-wrap">
-                  <div class="progress-left card">
-                    <div class="proc-card" data-role="proc-card" data-plant="pickering"></div>
-                  </div>
-
-                  <div class="progress-right card">
-                    <div class="proc-card" data-role="proc-card" data-plant="cernavoda"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="progress-delayed">
-                <div class="feeder-info3 feeder-card card" data-role="delay-card">
-                  <div class="proc-header-row">
-                    <div class="feeder-title-row">
-                      <span class="feeder-title-main"><img src="./images/warning.png" alt=""> 공정 지연 현황</span>
+                <div class="progress-adjust">
+                  <!-- 위쪽: flex2 -->
+                  <div class="progress-wrap">
+                    <div class="progress-left card">
+                      <div class="proc-card" data-role="proc-card" data-plant="pickering"></div>
+                    </div>
+  
+                    <div class="progress-right card">
+                      <div class="proc-card" data-role="proc-card" data-plant="cernavoda"></div>
                     </div>
                   </div>
-                  <div class="delay-con">
-                    <!-- data-code 연결하면 됨 -->
-                    <div class="delay-left">
-                      <div class="delay-item" data-code="A09W" data-proc="PBC" data-status="delayed">
-                        <span class="delay-label">A09W / PBC</span>
-                        <span class="status-delayed">delayed</span>
-                      </div>
-                      <div class="delay-item" data-code="C13F" data-proc="ADAPTOR" data-status="delayed">
-                        <span class="delay-label">C13F / Adaptor</span>
-                        <span class="status-delayed">delayed</span>
-                      </div>
-                      <div class="delay-item" data-code="O02Z" data-proc="LRB" data-status="delayed">
-                        <span class="delay-label">O02Z / LRB</span>
-                        <span class="status-delayed">delayed</span>
+                  <!-- 아래쪽: flex1 -->
+                  <div class="progress-bottom card" data-role="delay-card">
+                    <div class="proc-header-row">
+                      <div class="feeder-title-row">
+                        <span class="feeder-title-main"><img src="./images/warning.png" alt=""> 공정 지연 현황</span>
                       </div>
                     </div>
-                    <div class="vline"></div>
-                    <div class="delay-right">
-                      <div class="delay-item" data-code="E02P" data-proc="P+PBO" data-status="delayed">
-                        <span class="delay-label">E02P / P+PBO</span>
-                        <span class="status-delayed">delayed</span>
+                    <div class="delay-con">
+                      <!-- data-code 연결하면 됨 -->
+                      <div class="delay-left">
+                        <div class="delay-item" data-code="A09W" data-proc="PBC" data-status="delayed">
+                          <span class="delay-label">A09W / PBC</span>
+                          <span class="status-delayed">delayed</span>
+                        </div>
+                        <div class="delay-item" data-code="C13F" data-proc="ADAPTOR" data-status="delayed">
+                          <span class="delay-label">C13F / Adaptor</span>
+                          <span class="status-delayed">delayed</span>
+                        </div>
                       </div>
-                      <div class="delay-item" data-code="R19F" data-proc="FIN" data-status="delayed">
-                        <span class="delay-label">R19F / FIN</span>
-                        <span class="status-delayed">delayed</span>
-                      </div>
+                      <div class="vline"></div>
+                      <div class="delay-right">
+                        <div class="delay-item" data-code="E02P" data-proc="P+PBO" data-status="delayed">
+                          <span class="delay-label">E02P / P+PBO</span>
+                          <span class="status-delayed">delayed</span>
+                        </div>
+                        <div class="delay-item" data-code="R19F" data-proc="FIN" data-status="delayed">
+                          <span class="delay-label">R19F / FIN</span>
+                          <span class="status-delayed">delayed</span>
+                        </div>
 
-                      <div class="delay-item" data-code="H13W" data-proc="DEF" data-status="delayed">
-                        <span class="delay-label">H13W / DEF</span><span class="status-delayed">delayed</span>
                       </div>
                     </div>
                   </div>

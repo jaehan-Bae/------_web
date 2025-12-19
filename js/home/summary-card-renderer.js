@@ -48,9 +48,13 @@
 
     const canvas = card.querySelector(".feeder-canvas");
     if (canvas && typeof window.drawFeederDonut === "function") {
-      window.drawFeederDonut(canvas, Number(model.percent ?? 0), model.colors);
+      window.drawFeederDonut(
+        canvas,
+        Number(model.percent ?? 0),
+        model.colors,
+        model.donutStyle 
+      );
     }
-
     renderMiniBarsFromModel(card, model.bars);
   }
 

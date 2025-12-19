@@ -6,7 +6,9 @@ function drawFeederDonut(canvas, percent, colors, style = {}) {
   const h = canvas.height;
   const cx = w / 2;
   const cy = h / 2;
-  const radius = Math.min(w, h) / 2 - 10;
+
+  const lw = Number(style?.lineWidth ?? 20);
+  const radius = Math.min(w, h) / 2 - lw / 2;  // (기본 20이면 기존 -10과 동일)
 
   ctx.clearRect(0, 0, w, h);
 
@@ -14,7 +16,7 @@ function drawFeederDonut(canvas, percent, colors, style = {}) {
   ctx.beginPath();
   ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
   ctx.strokeStyle = "#eeeeee";
-  ctx.lineWidth = style?.lineWidth ?? 20;
+  ctx.lineWidth = lw;
   ctx.lineCap = "round";
   ctx.stroke();
 
@@ -30,10 +32,11 @@ function drawFeederDonut(canvas, percent, colors, style = {}) {
   gradient.addColorStop(1, colors.to);
 
   ctx.strokeStyle = gradient;
-  ctx.lineWidth = 20;
+  ctx.lineWidth = lw;       // 고정 20 제거
   ctx.lineCap = "round";
   ctx.stroke();
 }
+
 
 function renderProcBarChart(targetId, items, daily = []) {
   const container = document.getElementById(targetId);

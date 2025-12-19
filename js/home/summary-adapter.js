@@ -41,7 +41,7 @@
       bars: data.bars || {},
 
         donutStyle: {
-        lineWidth: 1000   // 여기서 조절
+        lineWidth: 12   // 여기서 조절
         }
     };
   }

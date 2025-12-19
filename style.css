@@ -116,13 +116,14 @@ header {
   display: flex;
   gap: 15px;
   height: calc(100vh - 60px);
+  padding-bottom: 10px;
+  flex: 1;
 }
 .main-left {
-  flex: 2;
   display: flex;
+  flex: 2;
   gap: 15px;
   flex-direction: column;
-  height: 100%;
 }
 .main-right {
   display: flex;
@@ -135,10 +136,9 @@ header {
   border: 1px solid #000;
 }
 .map-space {
-  flex: 3;
+  flex: 3 1 0;
   border: 1px solid #eee;
   display: flex;
-  flex-direction: column;
   position: relative;
   overflow: hidden;
 }
@@ -187,7 +187,11 @@ header {
 .m-china   { left: 76%; top: 44%; }
 .m-korea   { left: 80.5%; top: 39%; }
 .map-bottom {
-  flex: 1;
+  flex: 1 1 0;
+}
+.map-bottom .card {
+  background: #fff;
+  height: 100%;
 }
 .map-icon img {
   width: 18px;
@@ -224,13 +228,16 @@ header {
 .map-bottom-grid{
   display: grid;
   grid-template-columns: 2fr 2fr 1.6fr 1.6fr; /* big, big, small, small */
-  gap: 16px;
+  gap: 15px;
   align-items: stretch;
+    grid-auto-rows: 1fr;            /* 자동 생성되는 행도 1fr로 채움 */
+      align-content: stretch;         /* 행들이 남는 높이를 분배해서 채움 */
+
 }
 /* size */
 .card--big{
   grid-row: span 2;     /* 왼쪽 큰 카드 2행 */
-  min-height: 360px;    /* 필요 시 조절 */
+  min-height: 300px;    /* 필요 시 조절 */
   position: relative;
 }
 .card--big .feeder-canvas {
@@ -240,7 +247,7 @@ header {
   height: 100px;
 }
 .card--small{
-  min-height: 170px;
+  min-height: 150px;
 }
 .card.card--big .mini-row{
   display: grid;
@@ -286,7 +293,7 @@ header {
 .dots{
   width: 10px;
   height: 10px;
-  border-radius: 999px;
+  border-radius: 50%;
   flex: 0 0 auto;
 }
 /* 왼쪽 마커 */
@@ -314,18 +321,25 @@ header {
 /* ========= 피커링, 체르노바다 전체 ========= */
 .progress-all {
   display: flex;
-  flex: 2;
+  flex-direction: column; 
+  flex: 1;          
+  width: 65%;
 }
-.progress-delayed {
+.progress-adjust {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   flex: 1;
 }
 .progress-wrap {
   display: flex;
+  flex: 3.8;
   gap: 15px;
 }
-.progress-wrap,
-.progress-delayed {
-  width: 70%;
+.progress-bottom {
+  flex: 1;
+}
+.progress-bottom .card {
 }
 .progress-left {
   flex: 1;
@@ -340,6 +354,18 @@ header {
   /* 슬롯 고정: title / summary / divider / bars */
   grid-template-rows: 24px 120px 1px auto;
   row-gap: 10px;
+}
+/* mini-bottom이 마지막 슬롯을 담당 */
+.card.card--big .mini-bottom{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;          /* 여기서 줄 간격 통제 */
+  padding-top: 0;    
+  margin: 0;
+}
+/* 기존 margin-top 방식 제거 */
+.card.card--big .mini-row + .mini-row{
+  margin-top: 0;
 }
 /* title */
 .card.card--big [data-field="title"] {
@@ -356,7 +382,9 @@ header {
   display: grid;
   grid-template-columns: 120px 1fr;
   align-items: center;
-  column-gap: 16px;
+  column-gap: 30px;
+  justify-self: center;  /* 가로 중앙 */
+  align-self: center;    /* 세로 중앙 */
 }
 /* donut wrap 고정 */
 .card.card--big .donut-wrap{
@@ -377,11 +405,20 @@ header {
   inset: 0;
   display: grid;
   place-items: center;
-  font-size: 13px;
+  /* font-size: 13px; */
   font-weight: 700;
-  color: #686D78;
   pointer-events: none;
 }
+/* 기본(픽커링) */
+.card[data-card="pickering"] .donut-center{
+  color: #2F7BEF;
+}
+
+/* 체르나보다 */
+.card[data-card="cernavoda"] .donut-center{
+  color: #FF8A00;
+}
+
 /* 목표/달성 텍스트 */
 .card.card--big .summary-text{
   display: flex;
@@ -443,7 +480,7 @@ header {
 }
 .card.card--big .mini-pct{
   text-align: right;
-  font-size: 12px;
+  font-size: 14px;
   color: #686D78;
 }
 /* CERNAVODA 카드 내부 mini-fill 색상 테마 */
@@ -519,19 +556,19 @@ header {
 /* ============= index.html: main-right ============= */
 /* 공정 카드 공통 */
 .proc-card{
-  padding: 15px 5px;
+  padding: 35px 5px;
 }
 .proc-title{
   text-align: center;
   font-weight: 600;
   letter-spacing: 1px;
   color: #686D78;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 .proc-list{
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 균등 간격 */
+  gap: 5px; /* 균등 간격 */
 }
 .proc-row{
   display: grid;
@@ -552,20 +589,21 @@ header {
 .proc-track{
   grid-column: 1 / -1;
   height: 10px;
-  background: #d9d9d9; /* 차트 배경(트랙) */
+  background: #EEEEEE; /* 차트 배경(트랙) */
   border-radius: 999px;
   overflow: hidden;
 }
 .proc-fill{
   height: 100%;
   width: 0%;
-  border-radius: 999px;
+  border-radius: 5;
 }
 
 
 /* setion:feeder-sec 왼쪽- 피더이미지 */
 .feeder-sec {
   display: flex;
+  justify-content: center;
   gap: 20px;
   padding-bottom: 20px;
   height: 70vh;
@@ -573,9 +611,15 @@ header {
 .feeder-img {
   flex: 4;
   text-align: center;
-  height: 70vh;
 }
-.feeder-img img {
+.feeder-bg {
+  position: relative;
+}
+.feeder-tools {
+  position: absolute;
+  z-index: 1;
+  top: 180px;
+  left: 300px;
 }
 .bc {
   background: #fff;
@@ -712,7 +756,7 @@ body.theme-cernavoda .mini-fill-lower  { background:#FFA000; }
 }
 .vline {
   width: 2px;
-  height: 60%;
+  height: 6vh;
   background: #d1d0d0;
 }
 /* 좌우 영역 비율 */
@@ -810,13 +854,13 @@ body.theme-cernavoda .feeder-stitle{ color:#FF7300; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 /* 범례 */
 .proc-legend {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
 }
 .proc-legend-item {
@@ -943,7 +987,7 @@ body.theme-cernavoda .proc-bar--actual {
   font-weight: 300;
   color: #686D78;
   align-items: center;
-  height: 130px;
+  height: 11vh;
   overflow-y: auto;         /* 영역 넘치면 마우스 휠 스크롤 */
   overflow-x: hidden;
   padding: 0 10px;
@@ -1029,6 +1073,11 @@ body.theme-cernavoda .proc-bar--actual {
 /* ============= project.html ============= */
 /*################## 슬라이드 ################## */
 /* 슬라이더 전체 영역 */
+#content-wrap,
+.main-wrap,
+.main-left {
+  height: 100%;
+}
 .progress-slider {
   position: relative;
   background: #f7f9fc;
@@ -1043,7 +1092,6 @@ body.theme-cernavoda .proc-bar--actual {
 }
 #content-wrap {
   flex: 1;                     /* 나머지 영역 전체 차지 */
-  min-height: 0;               /* overflow 버그 방지 (중요!) */
   padding: 0 20px;
 }
 /* 가로 슬라이드 컨테이너 */
