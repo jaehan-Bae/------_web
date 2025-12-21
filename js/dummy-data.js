@@ -377,8 +377,8 @@ const procDonutByPlantDummy = [
   { plantId: "pickering", key: "bending",         title: "Bending",        plan: 740, actual: 290 },
   { plantId: "pickering", key: "welding",         title: "Welding",        plan: 740, actual: 420 },
   { plantId: "pickering", key: "attach_welding",  title: "Attach Welding", plan: 740, actual: 670 },
-  { plantId: "pickering", key: "dimension_ins",   title: "Dimension Ins.", plan: 740, actual: 210 },
-  { plantId: "pickering", key: "final_ins",       title: "Final Ins.",     plan: 740, actual: 540 },
+  { plantId: "pickering", key: "dimension_ins",   title: "Dimension.", plan: 740, actual: 210 },
+  { plantId: "pickering", key: "final_ins",       title: "Final.",     plan: 740, actual: 540 },
 ];
 // 체르보나다
 procDonutByPlantDummy.push(

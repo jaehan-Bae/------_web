@@ -1,0 +1,557 @@
+/* 반응형 모음 */
+
+/* 노트북/태블릿 레이아웃 변화 구간 — 2025 최신 */
+
+/* Laptop expanded (high-res / low scaling notebooks) */
+@media (min-width: 1441px) and (max-width: 1600px) {
+  /* ============== 첫번째 페이지 ============== */
+  .progress-all {
+    width: 90%;
+  }
+  .proc-card {
+    padding: 10px 5px;
+  }
+  .main-wrap,
+  .main-left,
+  .progress-wrap,
+  .main-right,
+  .map-bottom-grid {
+    gap: 10px;
+  }
+  .progress-bottom.card {
+    padding: 15px 25px;
+  }
+  .delay-con {
+    padding: 0;
+  }
+  .proc-header-row {
+    margin-bottom: 5px;
+  }
+  .status-delayed {
+    display: none;
+  }
+
+  /* ============== 두번째 페이지 ============== */
+  .progress-slider{
+    max-width: 1500px;
+  }
+  .slide-layout {
+    max-width: 1400px;
+  }
+
+  /* ============== 세번째 페이지 ==============  */
+  .feeder-donut-con .feeder-canvas {
+    width: 110px;
+    height: 110px;
+  }
+  .feeder-ring {
+    width: 110px;
+    height: 110px;
+  }
+  .feeder-donut-con {
+    gap: 15px;
+  }
+  .kpi-value {
+    font-size: 22px;
+  }
+  .kpi-row {
+    gap: 14px;
+  }
+  .mini-pct {
+    font-size: 14px;
+  }
+  .feeder-mini-bars {
+    min-width: 210px;
+  }
+  .feeder-title-main,
+  .feeder-stitle {
+    font-size: 16px;
+  }
+  .proc-plot {
+  }
+  .proc-legend-dot {
+    width: 10px;
+    height: 10px;
+  }
+  .proc-legend {
+    gap: 20px;
+  }
+  .proc-bar-wrapper {
+    height: 140px;
+  }
+  .proc-grid {
+    top: -37px;
+  }
+  #procBarChart {
+    height: 155px;
+  }
+  .proc-bar-chart {
+    height: 190px;
+    padding: 0;
+    margin-bottom: -5px;
+    display: flex;
+    justify-content: center;
+  }
+  .delay-label {
+    font-size: 16px;
+  }
+ .proc-header-row {
+    margin-bottom: 10px;
+  }
+  .feeder-tools {
+    left: 200px;
+  }
+ }
+
+/* Laptop comfort zone */
+@media (max-width: 1440px) {
+/* ============== 첫번째 페이지 ============== */
+  .main-left,
+  .main-wrap,
+  .progress-wrap {
+    gap: 5px;
+  }
+  .progress-left.card,
+  .progress-right.card {
+    padding: 5px 25px;
+  }
+  .proc-list,
+  .progress-adjust {
+    gap: 5px;
+  }
+  .progress-bottom.card {
+    padding: 15px;
+  }
+  .delay-label,
+  .delay-con {
+    font-size: 14px;
+  }
+  .small-kpi__value {
+    font-size: 24px;
+  }
+  .feeder-title-main {
+    font-size: 16px;
+  }
+  .map-bottom-grid {
+    gap: 5px;
+  }
+  .feeder-canvas {
+    transform: scale(.9);
+  }
+  .card.card--big {
+    grid-template-rows: 30px 97px 1px auto;
+  }
+  .card.card--big .summary-text .kv .v,
+  .proc-pct {
+    font-weight: 500;
+  }
+  .small-kpi__value {
+    font-size: 22px;
+  }
+  .proc-card {
+    padding: 10px 0px;
+  }
+  .proc-title {
+    margin-bottom: 20px;
+  }
+  .proc-name {
+    font-size: 13px;
+  }
+
+  /* ============== 두번째 페이지 ============== */
+  .progress-slider{
+    max-width: 1300px;
+  }
+  .slide-layout {
+    max-width: 1200px;
+  }
+  .proc-donut-canvas {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+  .card.card-large {
+    padding: 15px 25px;
+  }
+  .map-space {
+    flex: 1.5 1 0;
+  }
+  .proc-card {
+    padding: 15px 5px;
+  }
+  .card.card--big .summary-row {
+    column-gap: 10px;
+  }
+  .progress-all {
+    width: 100%;
+  }
+  .status-delayed {
+    display: none;
+  }
+  .delay-item {
+    width: 130px;
+  }
+  .small-kpi__delta img {
+    width: 10px;
+    top: -5px;
+  }
+  .delta-text {
+    font-size: 12px;
+  }
+
+  /* ============== 세번째 페이지 ==============  */
+  .proc-bar--actual,
+  .proc-bar--plan {
+    width: 25px;
+  }
+  .feeder-sec {
+    height: 60vh;
+  }
+  .feeder-tools {
+    top: 140px;
+  }
+  .feeder-donut-con .feeder-canvas {
+    transform: scale(.55);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    height: auto;
+  }
+  .feeder-percent {
+    font-size: 16px;
+  }
+  .kpi-label {
+    font-size: 14px;
+  }
+  .feeder-donut-con {
+    gap: 20px;
+  }
+  .kpi-value {
+    font-size: 20px;
+  }
+  .feeder-mini-bars {
+    gap: 10px;
+    min-width: 180px;
+  }
+  .mini-pct {
+    width: 40px;
+    font-size: 13px;
+    margin-left: 15px;
+  }
+  .proc-plot {
+    width: 90%;
+  }
+  .mini-label {
+    font-size: 12px;
+    width: 55px;
+  }
+  .mini-row {
+    gap: 0;
+  }
+  .feeder-body-row {
+    margin-top: 0;
+    gap: 0px;
+  }
+  .feeder-divider {
+    display: none;
+  }
+  .feeder-left {
+    gap: 0px;
+  }
+  .feeder-card {
+    padding: 10px 13px;
+  }
+  .proc-header-row {
+    margin-bottom: 5px;
+    gap: 13px;
+  }
+  .kpi-row {
+    gap: 10px;
+  }
+  .feeder-ring {
+    width: 90px;
+    height: 100px;
+  }
+  .proc-bar-wrapper {
+    height: 120px;
+  }
+  .proc-grid {
+    top: -55px;
+  }
+  #procBarChart {
+    height: 136px;
+  }
+  .proc-bar-chart {
+    height: 190px;
+    padding: 0;
+    margin-bottom: -30px;
+    display: flex;
+    justify-content: center;
+  }
+  .proc-legend-dot {
+    width: 10px;
+    height: 10px;
+  }
+  .feeder-title-main,
+  .feeder-stitle {
+    font-size: 14px;
+  }
+  .proc-legend {
+    font-size: 14px;
+  }
+  .feeder-info3 {
+    flex: 1.5;
+  }
+}
+
+/* Small laptop */
+@media (max-width: 1280px) {
+  /* 1025 ~ 1280 */
+  /* ============== 두번째 페이지 ============== */
+  .slide-left {
+    gap: 10px;
+  }
+  #content-wrap {
+    padding: 0 10px;
+  }
+  .slide-layout {
+    gap: 10px;
+  }
+  .proc-donut-canvas-wrap {
+    width: 90px;
+    height: auto;
+  }
+  .proc-donut-canvas {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+  .proc-donut-title,
+  .proc-donut-metrics dt {
+    font-size: 12px;
+  }
+  .proc-donut-metrics dd {
+    font-size: 18px;
+    min-width: 25px;
+  }
+  [id^="card-total-progress1"] .bar-x-labels span {
+    font-size: 11px;
+  }
+  [id^="card-total-progress2"] .bar-x-labels span {
+    font-size: 10px;
+  }
+  .card-large.card {
+    padding: 15px 20px;
+  }
+  .proc-donut-card {
+    padding: 15px;
+  }
+  .proc-donut-body {
+    justify-content: space-between;
+  }
+  .progress-slider{
+    max-width: 965px;
+  }
+  .slide-layout {
+    max-width: 910px;
+  }
+  .slider-next img {
+    width: 35px;
+  }
+  .proc-donut-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    min-width: 0;
+    gap: 10px;
+  }
+  .card-small.card {
+    padding: 15px 25px;
+  }
+  .card-title {
+    font-size: 14px;
+    gap: 0;
+  }
+  .bar-label {
+    font-size: 12px;
+  }
+  .slide-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  [id^="card-total-progress2"] .proc-label {
+    font-size: 11px;
+  }
+  .progress-slider {
+    margin-top: 10px;
+  }
+}
+
+/* Tablet portrait → landscape */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* ============== 첫번째 페이지 ============== */
+  html, body{
+    height: auto;
+  }
+  .menu {
+    height: 100%;
+  }
+  .main-wrap {
+    height: auto !important;
+    min-height: 0;
+    flex-direction: column;
+  }
+  .layout,
+  .layout-main,
+  #content-wrap{
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+  .layout-right {
+    height: auto;
+  }
+    /* 좌/우 영역이 full width로 내려오게 */
+  .main-left,
+  .main-right{
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  /* 지도 영역: 가로 꽉 + 높이 확보 */
+  .map-space{
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 360px; 
+    height: 45vh;
+    max-height: 520px;
+  }
+  .map-notice{
+    font-size: 12px;
+  }
+  .map-icon-head {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .map-notice1,
+  .map-notice2{
+    min-height: auto;
+    padding: 5px 15px;
+  }
+  .notice-items {
+    gap: 2px;
+  }
+  .map-icon-body {
+    gap: 8px;
+  }
+  .notice-country {
+    gap: 8px;
+  }
+  .dots {
+    width: 7px;
+    height: 7px;
+  }
+  .map-icon img {
+    width: 14px;
+  }
+  .notice-items {
+    margin-top: 4px;
+  }
+  /* map-bottom은 지도 아래에서 자연스럽게 */
+  .map-bottom{
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  /* 하단 그리드: 카드 한 칸씩(1열) */
+  .map-bottom-grid{
+    grid-template-columns: 1fr 1fr; /* 한 줄에 하나 */
+    grid-auto-rows: auto;
+    gap: 12px;
+    align-content: start;
+  }
+  /* big 카드 span 2 해지 (1열에서는 의미 없음) */
+  .card--big{
+    grid-row: auto;
+    min-height: 260px;
+  }
+  /* big 카드 내 캔버스 absolute는 모바일에서 겹침 유발 → static 추천 */
+  .card--big .feeder-canvas{
+    position: static;
+    width: 90px;
+    height: 90px;
+    margin: 8px 0 0;
+  }
+  .card.card--big,
+  .card.card--small {
+    padding: 25px;
+  }
+  .progress-wrap {
+    align-items: center;
+    justify-content: center;
+  }
+  .vline {
+    display: none;
+  }
+  .status-delayed {
+    display: none;
+  }
+
+  /* ============== 두번째 페이지 ============== */
+  .progress-slider{
+    max-width: 800px;
+  }
+  .slide-layout {
+    max-width: 700px;
+  }
+  .card-badge {
+    display: none;
+  }
+  .slide-layout {
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .card-legend .legend-item {
+    display: none;
+  }
+  .card-title {
+    font-size: 13px;
+  }
+  .sl {
+    height: 16px;
+  }
+  .card-small.card {
+    padding: 15px 25px 15px 10px;
+  }
+  .proc-donut-canvas-wrap {
+    width: 80px;
+  }
+  [id^="card-total-progress1"] .bar-x-labels, [id^="card-total-progress2"] .bar-x-labels {
+    display: none;
+  }
+  .card-small {
+    min-height: 240px;
+  }
+
+  /* ============== 세번째 페이지 ==============  */
+  .feeder-btns {
+    width: 80%;
+  }
+  .feeder-sec {
+    display: block;
+  }
+  .feeder-info {
+    gap: 15px;
+  }
+  .feeder-info1 {
+    margin-top: 15px;
+  }
+  .layout-main {
+    height: auto;
+  }
+  .layout {
+    min-height: auto;
+  }
+  .feeder-sec{
+    min-height: 0;
+    height: auto;
+  }
+  .feeder-tools {
+    top: 139px;
+  }
+}
+

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const slidesWrapper = slider.querySelector(".progress-slides");
   const slides = slider.querySelectorAll(".progress-slide");
   const nextBtn = slider.querySelector(".slider-next");
-  // ✅ dot 범위 좁히기 (다른 dot들 섞이는 문제 방지)
+  // dot 범위 좁히기 (다른 dot들 섞이는 문제 방지)
   const dots = slider.querySelectorAll(".slider-dots .dot");
 
   if (!slidesWrapper) {
