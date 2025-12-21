@@ -7,25 +7,39 @@
 // Demo / Reset 버튼
 // 즉, 페이지 단위 상태 관리 + 렌더 트리거 역할
 // ======================================================
+
+// ======================================================
 // 0) 전역 캐시/상태
 // ======================================================
 let HOLES_CACHE = null;            // holes.json 캐시
 let OVERLAY = null;                // svg overlay element
-let HOLE_ELEMS_BY_KEY = new Map(); // key -> SVG circle
+let HOLE_ELEMS_BY_KEY = new Map(); // key -> { base, dot, rim, hi }
+let ROW_Y_MAP = null;              // { rowName: snappedY }
+
+// (선택) 팝업 등에서 현재 컨텍스트 참조하고 싶을 때
+window.__activeFeederContext = window.__activeFeederContext || "pickering-upper";
+
+// (선택) hole key -> 공정명 매핑(없으면 "")
+// holes.json에 proc가 없어서 팝업에 proc가 꼭 필요하면 여기에 매핑해도 됨
+window.holeProcByContext = window.holeProcByContext || {}; // { contextId: { holeKey: "PBC" } }
 
 document.addEventListener("DOMContentLoaded", () => {
-  window.holeStatusByContext = {};
-  initTabs();
-  initFeederTools(); // demo/reset 버튼
+  window.holeStatusByContext = window.holeStatusByContext || {};
 
-  // 최초 컨텍스트
+  initTabs();
+  initFeederTools();
+
   const first =
     document.querySelector(".feeder-btn.active")?.dataset.context ||
     document.querySelector(".feeder-btn")?.dataset.context ||
     "pickering-upper";
 
+  // ✅ 초기 컨텍스트는 무조건 빈 상태로 시작
+  window.holeStatusByContext[first] = {};
+
   renderAll(first);
 });
+
 
 // ======================================================
 // 1) 탭/툴 버튼
@@ -83,6 +97,8 @@ function initFeederTools() {
 function renderAll(contextId) {
   const [plantId, position] = contextId.split("-");
 
+  window.__activeFeederContext = contextId;
+
   // 테마 토글
   document.body.classList.toggle("theme-cernavoda", plantId === "cernavoda");
 
@@ -106,8 +122,6 @@ function renderSummaryCard(contextId, plantId, position) {
   const card = document.querySelector('[data-role="summary-card"]');
   if (!card) return;
 
-  // feederSummaryDummyByContext 예:
-  // { "pickering-upper": { title, subtitle, produced, total, bars:{upper,middle,lower} } }
   const data = window.feederSummaryDummyByContext?.[contextId];
   if (!data) {
     console.warn("[feeder] feederSummaryDummyByContext missing for", contextId);
@@ -142,7 +156,8 @@ function renderSummaryCard(contextId, plantId, position) {
   } else {
     console.warn("[feeder] drawFeederDonut missing or canvas missing");
   }
-    // UPPER / MIDDLE / LOWER 미니바
+
+  // UPPER / MIDDLE / LOWER 미니바
   renderMiniBars(card, plantId, data.bars);
 }
 
@@ -155,7 +170,6 @@ function renderMiniBars(card, plantId, bars) {
   const middlePctEl = card.querySelector('[data-role="mini-middle-pct"]');
   const lowerPctEl  = card.querySelector('[data-role="mini-lower-pct"]');
 
-  // 0~1 또는 0~100 둘 다 허용
   const toPct = (v) => {
     const n = Number(v);
     if (!Number.isFinite(n)) return 0;
@@ -163,7 +177,6 @@ function renderMiniBars(card, plantId, bars) {
     return Math.max(0, Math.min(100, Math.round(pct)));
   };
 
-  // 체르나보다면 MIDDLE 행 숨김
   const middleRow = middleFill?.closest(".mini-row");
   if (middleRow) middleRow.style.display = (plantId === "cernavoda") ? "none" : "";
 
@@ -180,12 +193,10 @@ function renderMiniBars(card, plantId, bars) {
   if (lowerPctEl)  lowerPctEl.textContent  = `${l}%`;
 }
 
-
 // ======================================================
 // 4) 주간 차트
 // ======================================================
 function renderWeeklyChart(contextId) {
-  // ★ 컨텍스트 기준 공정 필터 결과 사용
   const items = (typeof window.getProcWeeklyRowsByContext === "function")
     ? window.getProcWeeklyRowsByContext(contextId)
     : [];
@@ -214,14 +225,11 @@ function renderDelay(contextId) {
 }
 
 // ======================================================
-// 6) 좌측 원판: holes.json + (사이니지와 동일한) 홀 렌더링/색상 규칙
-//    - 검은(콘케이브) 홀 베이스는 항상 렌더
-//    - 상태는 초록/빨강/하양 점으로만 표현(ok/delay/before)
-//    - row 값이 있으면 row 기준으로 Y를 스냅(행 정렬)
+// 6) 좌측 원판: holes.json + 홀 렌더링/색상 규칙
+//    - base/lip는 항상 렌더
+//    - status dot/rim/hi는 상태 있을 때만 노출
+//    - base circle에 data-code/data-status를 심어서 클릭 타겟으로 사용
 // ======================================================
-let ROW_Y_MAP = null;              // { rowName: snappedY }
-
-/** 이미지 로딩 대기(기존 유지) */
 async function renderFeederPlate(contextId) {
   const mount = document.getElementById("feederMount");
   const img = mount?.querySelector(".feeder-bg");
@@ -234,10 +242,12 @@ async function renderFeederPlate(contextId) {
 
   const holes = await loadHolesJsonOnce();
   ensureOverlay(mount);
-- buildHolesIfNeeded(holes); // base/lip + status layers (1회)
-+ await buildHolesForContext(contextId, holes); // 컨텍스트마다 다시 그리기
-  applyHoleStatuses(contextId); // 상태색 적용
 
+  // 컨텍스트마다 다시 그림 (middle 202개 때문에)
+  await buildHolesForContext(contextId, holes);
+
+  // 상태색 + base.dataset.status 갱신
+  applyHoleStatuses(contextId);
 }
 
 function waitImageReady(img) {
@@ -251,7 +261,7 @@ function waitImageReady(img) {
 async function loadHolesJsonOnce() {
   if (HOLES_CACHE) return HOLES_CACHE;
 
-  const url = "./holes.json"; // 필요 시 경로만 수정
+  const url = "./js/feeder/holes.json";
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`[feeder] holes.json fetch failed: ${res.status}`);
 
@@ -278,9 +288,8 @@ function ensureOverlay(mount) {
   // holes.json 만든 기준 좌표계로 고정
   const FEEDER_VB = { w: 1201, h: 822 };
   svg.setAttribute("viewBox", `0 0 ${FEEDER_VB.w} ${FEEDER_VB.h}`);
-  svg.setAttribute("preserveAspectRatio", "none"); // 이미지가 responsive일 때 같이 늘어남
+  svg.setAttribute("preserveAspectRatio", "none");
 
-  // (사이니지와 동일) 그라디언트/효과 정의
   svg.innerHTML = `
     <defs>
       <radialGradient id="concaveGrad" cx="50%" cy="50%" r="60%">
@@ -323,12 +332,15 @@ function normalizeHole(h) {
   const y = Number(h.y ?? h.cy ?? h.posY ?? h.top ?? 0);
   const row = h.row ?? h.rowName ?? h.rlabel ?? h.line ?? null;
 
-  // 반응형용 0~1 좌표도 허용(기존 유지)
+  // (선택) holes.json에 proc 들어있으면 읽음
+  const proc = h.proc ?? h.process ?? h.procName ?? "";
+
+  // 반응형용 0~1 좌표도 허용
   const isUnit = x > 0 && x <= 1 && y > 0 && y <= 1;
-  return { key, x, y, row, isUnit };
+  return { key, x, y, row, proc, isUnit };
 }
 
-// row 기준 스냅: 중앙값(median)으로 행 Y 고정(사이니지 방식)
+// row 기준 스냅: 중앙값(median)으로 행 Y 고정
 function buildRowYMap(list) {
   const byRow = new Map();
   list.forEach((h) => {
@@ -348,117 +360,25 @@ function buildRowYMap(list) {
   return map;
 }
 
-// 상태 색상 규칙(사이니지 동일): 초록/빨강/하양만
+// 상태 색상(사이니지 동일): 초록/빨강/하양만
 function colorOf(status) {
   switch (status) {
     case "ok":     return "#159C61";
     case "before": return "#F3F4F6";
     case "delay":  return "#E6243C";
-    default:       return "transparent"; // 상태 없음
+    default:       return "transparent";
   }
 }
 
-// feeder-page.js 내 기존 상태키(warn/done/idle 등)를 사이니지 키로 매핑
+// feeder-page.js 내부 상태키를 사이니지 키로 매핑
 function mapStatusToSignageKey(st) {
   switch (st) {
     case "ok":    return "ok";
     case "delay": return "delay";
     case "warn":  return "before";
     case "done":  return "before";
-    default:      return ""; // idle 포함: 점 없음
+    default:      return ""; // idle 포함
   }
-}
-
-function buildHolesIfNeeded(holes) {
-  if (!OVERLAY) return;
-  const layer = OVERLAY.querySelector("#holesLayer");
-  if (!layer) return;
-
-  // 이미 생성했다면 스킵
-  if (HOLE_ELEMS_BY_KEY.size > 0) return;
-
-  const normalized = holes.map(normalizeHole).filter((h) => h.key);
-
-  // unit(0~1) 좌표 지원(기존 유지)
-  const anyUnit = normalized.some((h) => h.isUnit);
-  const vbW = anyUnit ? 1000 : 1201;
-  const vbH = anyUnit ? 1000 : 822;
-  if (anyUnit) OVERLAY.setAttribute("viewBox", `0 0 ${vbW} ${vbH}`);
-
-  // row Y 맵 준비(holes.json에 row가 있을 때만)
-  ROW_Y_MAP = null;
-  const hasRow = normalized.some((h) => h.row);
-  if (hasRow) {
-    // rowYMap은 unit 스케일 전에 원본 y로 계산해야 안정적이라,
-    // normalized의 y를 그대로 사용(단, unit이면 스케일 반영해서 계산)
-    const forMap = normalized.map((h) => ({
-      row: h.row,
-      y: anyUnit ? (h.y * vbH) : h.y,
-    }));
-    ROW_Y_MAP = buildRowYMap(forMap);
-    window.__rowYMap = ROW_Y_MAP; // 디버그 필요 시
-  }
-
-  const ns = "http://www.w3.org/2000/svg";
-  const BASE_R   = 13.4;
-  const LIP_R    = 13.9;
-  const STATUS_R = 12.2;
-
-  normalized.forEach((h) => {
-    const cx = anyUnit ? h.x * vbW : h.x;
-    const rawCy = anyUnit ? h.y * vbH : h.y;
-    const cy = (h.row && ROW_Y_MAP && ROW_Y_MAP[h.row] != null) ? ROW_Y_MAP[h.row] : rawCy;
-
-    // [1] concave base (검은 원 느낌)
-    const base = document.createElementNS(ns, "circle");
-    base.setAttribute("cx", String(cx));
-    base.setAttribute("cy", String(cy));
-    base.setAttribute("r", String(BASE_R));
-    base.setAttribute("fill", "url(#concaveGrad)");
-    base.setAttribute("opacity", "1");
-    layer.appendChild(base);
-
-    // [2] lip highlight
-    const lip = document.createElementNS(ns, "circle");
-    lip.setAttribute("cx", String(cx));
-    lip.setAttribute("cy", String(cy));
-    lip.setAttribute("r", String(LIP_R));
-    lip.setAttribute("fill", "url(#lipGrad)");
-    lip.setAttribute("opacity", "1");
-    layer.appendChild(lip);
-
-    // [3] status dot + rim + spec (초록/빨강/하양만)
-    const dot = document.createElementNS(ns, "circle");
-    dot.setAttribute("cx", String(cx));
-    dot.setAttribute("cy", String(cy));
-    dot.setAttribute("r", String(STATUS_R));
-    dot.setAttribute("fill", "transparent");
-    dot.setAttribute("opacity", "0.92");
-    dot.style.display = "none";
-    layer.appendChild(dot);
-
-    const rim = document.createElementNS(ns, "circle");
-    rim.setAttribute("cx", String(cx));
-    rim.setAttribute("cy", String(cy));
-    rim.setAttribute("r", String(STATUS_R - 0.5));
-    rim.setAttribute("fill", "none");
-    rim.setAttribute("stroke", "url(#bevelStroke)");
-    rim.setAttribute("vector-effect", "non-scaling-stroke");
-    rim.setAttribute("opacity", "0.95");
-    rim.style.display = "none";
-    layer.appendChild(rim);
-
-    const hi = document.createElementNS(ns, "circle");
-    hi.setAttribute("cx", String(cx - STATUS_R * 0.28));
-    hi.setAttribute("cy", String(cy - STATUS_R * 0.30));
-    hi.setAttribute("r", String(STATUS_R * 0.55));
-    hi.setAttribute("fill", "url(#statusSpec)");
-    hi.setAttribute("opacity", "0.35");
-    hi.style.display = "none";
-    layer.appendChild(hi);
-
-    HOLE_ELEMS_BY_KEY.set(h.key, { dot, rim, hi });
-  });
 }
 
 async function buildHolesForContext(contextId, holes) {
@@ -468,24 +388,24 @@ async function buildHolesForContext(contextId, holes) {
   const layer = OVERLAY.querySelector("#holesLayer");
   if (!layer) return;
 
-  // ✅ 컨텍스트마다 다시 그림 (middle만 202개를 위해 필수)
+  // 컨텍스트마다 다시 그림
   layer.innerHTML = "";
   HOLE_ELEMS_BY_KEY = new Map();
 
   let normalized = holes.map(normalizeHole).filter((h) => h.key);
 
-  // unit(0~1) 좌표 지원(기존 유지)
+  // unit(0~1) 좌표 지원
   const anyUnit = normalized.some((h) => h.isUnit);
   const vbW = anyUnit ? 1000 : 1201;
   const vbH = anyUnit ? 1000 : 822;
   if (anyUnit) OVERLAY.setAttribute("viewBox", `0 0 ${vbW} ${vbH}`);
 
-  // ✅ Pickering-middle만 202개 대칭 차감 선택
+  // Pickering-middle만 202개 선택
   if (plantId === "pickering" && position === "middle") {
     normalized = selectSymmetricByRow(normalized, 202);
   }
 
-  // row Y 맵 준비(holes.json에 row가 있을 때만)
+  // row Y 스냅 맵
   ROW_Y_MAP = null;
   const hasRow = normalized.some((h) => h.row);
   if (hasRow) {
@@ -494,7 +414,7 @@ async function buildHolesForContext(contextId, holes) {
       y: anyUnit ? (h.y * vbH) : h.y,
     }));
     ROW_Y_MAP = buildRowYMap(forMap);
-    window.__rowYMap = ROW_Y_MAP;
+    window.__rowYMap = ROW_Y_MAP; // debug
   }
 
   const ns = "http://www.w3.org/2000/svg";
@@ -507,25 +427,36 @@ async function buildHolesForContext(contextId, holes) {
     const rawCy = anyUnit ? h.y * vbH : h.y;
     const cy = (h.row && ROW_Y_MAP && ROW_Y_MAP[h.row] != null) ? ROW_Y_MAP[h.row] : rawCy;
 
-    // [1] concave base
+    // [1] concave base (✅ 클릭 타겟)
     const base = document.createElementNS(ns, "circle");
     base.setAttribute("cx", String(cx));
     base.setAttribute("cy", String(cy));
     base.setAttribute("r", String(BASE_R));
     base.setAttribute("fill", "url(#concaveGrad)");
     base.setAttribute("opacity", "1");
+
+    // ✅ 팝업 트리거용 dataset
+    base.dataset.code = h.key;
+    // proc 우선순위: holes.json proc -> holeProcByContext 매핑
+    const procMap = window.holeProcByContext?.[contextId] || {};
+    base.dataset.proc = (h.proc || procMap[h.key] || "");
+    base.dataset.status = "idle"; // applyHoleStatuses에서 갱신
+    base.style.cursor = "pointer";
+    base.style.pointerEvents = "all";
+
     layer.appendChild(base);
 
-    // [2] lip
+    // [2] lip (클릭 방해 금지)
     const lip = document.createElementNS(ns, "circle");
     lip.setAttribute("cx", String(cx));
     lip.setAttribute("cy", String(cy));
     lip.setAttribute("r", String(LIP_R));
     lip.setAttribute("fill", "url(#lipGrad)");
     lip.setAttribute("opacity", "1");
+    lip.style.pointerEvents = "none";
     layer.appendChild(lip);
 
-    // [3] status dot + rim + spec
+    // [3] status dot + rim + spec (클릭은 base로만 받게)
     const dot = document.createElementNS(ns, "circle");
     dot.setAttribute("cx", String(cx));
     dot.setAttribute("cy", String(cy));
@@ -533,6 +464,7 @@ async function buildHolesForContext(contextId, holes) {
     dot.setAttribute("fill", "transparent");
     dot.setAttribute("opacity", "0.92");
     dot.style.display = "none";
+    dot.style.pointerEvents = "none";
     layer.appendChild(dot);
 
     const rim = document.createElementNS(ns, "circle");
@@ -544,6 +476,7 @@ async function buildHolesForContext(contextId, holes) {
     rim.setAttribute("vector-effect", "non-scaling-stroke");
     rim.setAttribute("opacity", "0.95");
     rim.style.display = "none";
+    rim.style.pointerEvents = "none";
     layer.appendChild(rim);
 
     const hi = document.createElementNS(ns, "circle");
@@ -553,20 +486,18 @@ async function buildHolesForContext(contextId, holes) {
     hi.setAttribute("fill", "url(#statusSpec)");
     hi.setAttribute("opacity", "0.35");
     hi.style.display = "none";
+    hi.style.pointerEvents = "none";
     layer.appendChild(hi);
 
-    HOLE_ELEMS_BY_KEY.set(h.key, { dot, rim, hi });
+    HOLE_ELEMS_BY_KEY.set(h.key, { base, dot, rim, hi });
   });
 }
 
 // Pickering-middle 전용: 202개 대칭 선택
 function selectSymmetricByRow(list, targetCount) {
   const ROWS = ["A","B","C","D","E","F","G","H","J","K","L","M","N","O","P","Q","R","S","T","U","V","W"];
-
-  // 중앙행(가로 점선 근처) 원하는대로 조정 가능
   const CENTER_ROWS = ["L", "M"];
 
-  // row -> holes[]
   const byRow = new Map();
   ROWS.forEach(r => byRow.set(r, []));
   list.forEach(h => {
@@ -574,7 +505,6 @@ function selectSymmetricByRow(list, targetCount) {
     if (byRow.has(r)) byRow.get(r).push(h);
   });
 
-  // row 내부는 좌->우 정렬
   for (const arr of byRow.values()) {
     arr.sort((a, b) => (a.x ?? 0) - (b.x ?? 0));
   }
@@ -582,16 +512,13 @@ function selectSymmetricByRow(list, targetCount) {
   const picked = [];
   const used = new Set();
 
-  // ✅ row 한 줄에서 “가운데→좌우 대칭”으로 가져오는 함수
   const takeRowCenterOut = (arr) => {
     if (!arr || !arr.length) return false;
 
     const n = arr.length;
-    // 가운데 인덱스(짝수면 왼쪽 중앙부터 시작)
     let L = Math.floor((n - 1) / 2);
     let R = L + 1;
 
-    // 1) 중앙 하나(또는 두 개)부터 시작
     while (picked.length < targetCount && (L >= 0 || R < n)) {
       if (L >= 0) {
         const h = arr[L];
@@ -616,12 +543,10 @@ function selectSymmetricByRow(list, targetCount) {
     return false;
   };
 
-  // 1) 중앙행 먼저 + 그 행은 좌우대칭으로
   for (const r of CENTER_ROWS) {
     if (takeRowCenterOut(byRow.get(r))) return picked.slice(0, targetCount);
   }
 
-  // 2) 중앙행을 기준으로 위/아래 대칭 확장 (각 행도 좌우대칭으로)
   const centerIdx = ROWS.indexOf(CENTER_ROWS[0]);
   if (centerIdx < 0) return list.slice(0, targetCount);
 
@@ -648,17 +573,19 @@ function selectSymmetricByRow(list, targetCount) {
   return picked.slice(0, targetCount);
 }
 
-
 function applyHoleStatuses(contextId) {
-  // holeStatusByContext 예: { "pickering-upper": { "H01":"ok", "H02":"delay" } }
   const map = window.holeStatusByContext?.[contextId] || {};
 
   HOLE_ELEMS_BY_KEY.forEach((obj, key) => {
-    const raw = map[key] || "idle";
-    const signageKey = mapStatusToSignageKey(raw);
-    const fill = colorOf(signageKey);
+    const raw = map[key] || "idle";           // ok / warn / delay / done / idle
+    const signageKey = mapStatusToSignageKey(raw); // ok / before / delay / ""
 
+    // ✅ 팝업이 읽을 현재 상태를 base에 저장
+    if (obj?.base) obj.base.dataset.status = raw;
+
+    const fill = colorOf(signageKey);
     const show = fill !== "transparent";
+
     if (obj?.dot) {
       obj.dot.setAttribute("fill", fill);
       obj.dot.style.display = show ? "" : "none";

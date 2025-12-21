@@ -21,6 +21,10 @@
    <!-- 커스텀 css / js-->
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/responsive.css">
+  <!-- 피더 팝업 -->
+  <link rel="stylesheet" href="./css/feeder-popup.css">
+  <script src="./js/feeder/feeder-first-popup.js" defer></script>
+  <script src="./js/feeder/feeder-popup.js" defer></script>
 </head>
 <body>
   <div class="layout">
@@ -194,5 +198,132 @@
       </main>
     </div>
   </div>
+  <!-- 피더 팝업 -->
+  <div id="feederFirstPopup" class="fpair hidden" role="dialog" aria-modal="true">
+    <div class="fpair-box">
+
+      <div class="fpair-head">
+        <div class="fpair-title">
+          <span id="fpairTitle">A9W - A14E</span>
+        </div>
+        <button class="fpair-close" type="button" aria-label="close">×</button>
+      </div>
+
+      <div class="fpair-body">
+        <div class="fpair-block">
+
+          <table class="fpair-table" aria-label="pair status table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th id="fpairColLeft">A9W</th>
+                <th id="fpairColRight">A14E</th>
+              </tr>
+            </thead>
+            <tbody id="fpairTbody">
+              <!-- JS로 rows 삽입 -->
+            </tbody>
+          </table>
+
+          <!-- ✅ 테이블 바로 밑 요약(보더 포함) -->
+          <div class="fpair-summary2" aria-label="pair summary">
+            <div class="fpair-sum-left">
+              <div class="fpair-code" id="fpairSumLeftCode">A9W</div>
+              <div class="fpair-code" id="fpairSumRightCode">A14E</div>
+            </div>
+
+            <div class="fpair-sum-right">
+              <div class="fpair-badges">
+                <span class="fpair-badge done">진행 <b id="fpairLeftDone">8</b></span>
+                <span class="fpair-badge delay">지연 <b id="fpairLeftDelay">3</b></span>
+              </div>
+              <div class="fpair-badges">
+                <span class="fpair-badge done">진행 <b id="fpairRightDone">8</b></span>
+                <span class="fpair-badge delay">지연 <b id="fpairRightDelay">3</b></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Feeder Table Popup -->
+  <div id="feederTablePopup" class="feeder-popup hidden">
+    <div class="popup-box popup-wide">
+      <!-- header -->
+      <div class="popup-header-bar">
+        <span class="popup-title">피더 현황 알림</span>
+        <button class="popup-close">×</button>
+      </div>
+
+      <!-- content -->
+      <div class="popup-content">
+
+        <!-- TABLE -->
+        <table class="feeder-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Name</th>
+              <th colspan="2" style="background: #eee;">A9W</th>
+              <th colspan="2" style="background: #eee;">A14E</th>
+            </tr>
+            <tr>
+              <th>Plan</th>
+              <th>Actual</th>
+              <th>Plan</th>
+              <th>Actual</th>
+            </tr>
+          </thead>
+
+          <tbody id="feederTableBody">
+            <!-- JS로 row 삽입 -->
+          </tbody>
+        </table>
+
+        <!-- 홀 팝업 -->
+        <div class="popup-result2">
+    <!-- row 1 : RESULT -->
+    <div class="r-row r-row--result">
+      <div class="r-cell r-label">RESULT</div>
+
+      <!-- A9W -->
+      <div class="r-cell r-col">
+        <span class="badge done">
+          진행 <b id="a9wDone">8</b>
+        </span>
+        <span class="badge delay">
+          지연 <b id="a9wDelay">3</b>
+        </span>
+      </div>
+
+      <!-- A14E -->
+      <div class="r-cell r-col">
+        <span class="badge done">
+          진행 <b id="a14eDone">8</b>
+        </span>
+        <span class="badge delay">
+          지연 <b id="a14eDelay">3</b>
+        </span>
+      </div>
+    </div>
+
+    <!-- row 2 : 진행률 -->
+    <div class="r-row r-row--rate">
+      <div class="r-cell r-label">진행률</div>
+
+      <div class="r-cell r-rate">
+        <span id="a9wRate">58.5</span>%
+      </div>
+
+      <div class="r-cell r-rate">
+        <span id="a14eRate">28.3</span>%
+      </div>
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
