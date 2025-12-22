@@ -131,41 +131,42 @@ header {
   flex-direction: column;
   gap: 15px;
 }
-.blank {
-  flex: 0.2;
-  border: 1px solid #000;
-}
-.map-space {
+.map-space{
   flex: 3 1 0;
   border: 1px solid #eee;
-  display: flex;
   position: relative;
   overflow: hidden;
 }
-/* 맵 실루엣(정적 이미지) */
-.map-space::after{
-  content: "";
+/* 지도 + 마커 레이어 */
+.map-stage{
   position: absolute;
-  right: 16px;
-  top: 10px;
+  inset: 0;
+}
+
+/* 지도는 꽉 차게 */
+.map-img{
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: calc(100% - 20px);
-  background: url("../images/map-silhouette.png") no-repeat right center;
-  background-size: cover;
-  opacity: 0.9;             /* 스샷처럼 은은하게 */
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.9;
   pointer-events: none;
   z-index: 0;
 }
+
+/* 마커 레이어 */
 .map-markers{
   position: absolute;
   inset: 0;
-  z-index: 1; 
+  z-index: 1;
 }
 
-/* 마커 기본 스타일 */
+/* 마커 기본 */
 .map-marker{
   position: absolute;
-  transform: translate(-50%, -50%); /* 좌표가 “점 중심”이 되게 */
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,6 +176,7 @@ header {
   color: #fff;
   text-shadow: 0 1px 2px rgba(0,0,0,.35);
 }
+.map-marker__label{ white-space: nowrap; }
 .map-marker__dot{
   width: 10px;
   height: 10px;
@@ -182,12 +184,57 @@ header {
 }
 
 /* ====== 좌표(예시) : 실제로는 미세 조정 필요 ====== */
-.m-canada { left: 13%; top: 33%; }
-.m-romania { left: 53.5%; top: 34%; }
-.m-china   { left: 76%; top: 44%; }
-.m-korea   { left: 80.5%; top: 39%; }
+.m-canada { left: 16%;  top: 33%; }
+.m-romania{ left: 54.5%; top: 30%; }
+.m-china  { left: 79%;  top: 43%; }
+.m-korea  { left: 82%;  top: 36%; }
 .map-bottom {
   flex: 1 1 0;
+}
+/* 색상 토큰 */
+.is-p1{ --c: #1E86EE; } 
+.is-p2{ --c: #3ABEFF; }
+.is-p3{ --c: #B0E9FF; }
+.is-c1{ --c: #FFB338; } 
+.is-c2{ --c: #86dbfc; }
+
+
+.map-marker__dot.hotspot{
+  --core: 8px;
+  --r1: 4px;   /* 1단 끝 */
+  --r2: 11px;   /* 2단 끝 */
+  --r3: 28px;   /* 3단 끝 */
+
+  width: var(--core);
+  height: var(--core);
+  border-radius: 50%;
+  background: var(--c);
+  position: relative;
+}
+
+.map-marker__dot.hotspot::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width: calc(var(--r3) * 2);
+  height: calc(var(--r3) * 2);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events:none;
+
+  /* 구획(단계) 번짐: 경계가 딱 보이게 */
+  background: radial-gradient(circle,
+    /* 코어 주변부터 1단 */
+    color-mix(in srgb, var(--c) 45%, transparent) 0 calc(var(--r1) / var(--r3) * 100%),
+    /* 2단 */
+    color-mix(in srgb, var(--c) 22%, transparent) calc(var(--r1) / var(--r3) * 100%) calc(var(--r2) / var(--r3) * 100%),
+    /* 3단 */
+    color-mix(in srgb, var(--c) 12%, transparent) calc(var(--r2) / var(--r3) * 100%) 100%
+  );
+
+  /* 블러를 아주 약하게만 */
+  filter: blur(0.7px);
 }
 .map-bottom .card {
   background: #fff;
@@ -197,18 +244,18 @@ header {
   width: 18px;
   height: auto;
 }
-.map-notice {
+.map-notice{
+  position: absolute;
+  left: 16px;
+  bottom: 5px;
   display: flex;
   gap: 10px;
   font-size: 14px;
-  z-index: 1;
-  bottom: 0 ;
-  opacity: .7;
-  position: absolute;
-  border-radius: 5px;
+  z-index: 3;
+  opacity: .75;
 }
 .map-notice1,
-.map-notice2 {
+.map-notice2{
   background: #fff;
   border: 1px solid #eee;
   width: 220px;
@@ -295,6 +342,7 @@ header {
   height: 10px;
   border-radius: 50%;
   flex: 0 0 auto;
+  background: var(--c);
 }
 /* 왼쪽 마커 */
 .dots--p1{ background: #006FE6; }
@@ -305,13 +353,12 @@ header {
 .dots--c2{ background: #95E1FB; }
 /* 하위항목 영역: “옆에 여백” (= 들여쓰기) */
 .notice-items{
-  margin-left: 20px;   /* ← 여기 조절하면 국가 대비 옆 여백 늘어남 */
+  margin-left: 20px;
   margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-/* 하위항목 텍스트 */
 .notice-item{
   font-size: 13px;
   color: #686D78;
