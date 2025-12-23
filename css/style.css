@@ -1472,12 +1472,39 @@ body.theme-cernavoda .proc-bar--actual {
 }
 
 /* 기본(피커링) */
-.progress-slide[data-plant="pickering"] .bar-actual { background: #95E1FB; }
-.progress-slide[data-plant="pickering"] .bar-plan   { background: #5CB6FF; }
-
+/* 실적(actual) */
+.progress-slide[data-plant="cernavoda"] .bar-actual{
+  background: linear-gradient(
+    90deg,
+    #FF8A47 0%,
+    #FF9D5C 100%
+  );
+}
+/* 계획(plan) */
+.progress-slide[data-plant="cernavoda"] .bar-plan{
+  background: linear-gradient(
+    90deg,
+    #FFD29A 0%,
+    #FFD9A3 100%
+  );
+}
 /* 체르나보다 */
-.progress-slide[data-plant="cernavoda"] .bar-actual { background: #FF9D5C; }
-.progress-slide[data-plant="cernavoda"] .bar-plan   { background: #FFD9A3; }
+/* 실적(actual) */
+.progress-slide[data-plant="cernavoda"] .bar-actual{
+  background: linear-gradient(
+    90deg,
+    #FF8A47 0%,
+    #FF9D5C 100%
+  );
+}
+/* 계획(plan) */
+.progress-slide[data-plant="cernavoda"] .bar-plan{
+  background: linear-gradient(
+    90deg,
+    #FFD29A 0%,
+    #FFD9A3 100%
+  );
+}
 .progress-slide[data-plant="cernavoda"] .dot-actual { background: #FF9D5C; }
 .progress-slide[data-plant="cernavoda"] .dot-plan   { background: #FFD9A3; }
 
