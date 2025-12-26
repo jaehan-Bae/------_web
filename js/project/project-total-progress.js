@@ -55,19 +55,25 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="bar-row">
         <span class="bar-label">실적</span>
         <div class="bar-track">
-          <div class="bar bar-actual" style="width:${clampPct(pct)}%"></div>
+          <div class="bar bar-actual"
+            style="width:${clampPct(pct)}%"
+            data-tooltip="실적 ${clampPct(pct)}%">
+          </div>
         </div>
       </div>
 
       <div class="bar-row">
         <span class="bar-label">계획</span>
         <div class="bar-track">
-          <div class="bar bar-plan" style="width:100%"></div>
+          <div class="bar bar-plan"
+              style="width:100%"
+              data-tooltip="계획 100%"></div>
         </div>
       </div>
 
       ${renderXAxisLabels()}
     `;
+
     applyPercentLabels(totalBarEl);
 
     // ✅ bar-track이 실제로 생성됐는지 반환
@@ -95,10 +101,15 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="proc-label">${r.title}</div>
               <div class="proc-bars">
                 <div class="bar-track">
-                  <div class="bar bar-actual" style="width:${clampPct(pct)}%"></div>
+                  <div class="bar bar-actual"
+                    style="width:${clampPct(pct)}%"
+                    data-tooltip="${r.title} 실적 ${clampPct(pct)}%">
+                  </div>
                 </div>
                 <div class="bar-track">
-                  <div class="bar bar-plan" style="width:100%"></div>
+                  <div class="bar bar-plan"
+                      style="width:100%"
+                      data-tooltip="${r.title} 계획 100%"></div>
                 </div>
               </div>
             </div>

@@ -1197,6 +1197,7 @@ body.theme-cernavoda .proc-bar--actual {
   border-radius: 8px;
   overflow: hidden;
   max-width: 1700px;
+  margin-top: 10px;
 }
 .layout-right {
   height: 100vh;
@@ -1273,6 +1274,20 @@ body.theme-cernavoda .proc-bar--actual {
   padding: 4px;
   z-index: 9999;
 }
+.slider-next img {
+  animation: floatY 3s ease-in-out infinite;
+}
+@keyframes floatY {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 /* 하단 점 표시 */
 .slider-dots {
   display: flex;
@@ -1317,11 +1332,10 @@ body.theme-cernavoda .proc-bar--actual {
   display: flex;
   flex-direction: column;
   padding: 20px 0 40px;
+  cursor: pointer;
 }
 [id^="card-total-progress1"] .bar-chart-horizontal {
   gap: 43px;
-}
-#card-total-progress2 .bar-chart-horizontal{
 }
 
 /* =========================
@@ -1384,10 +1398,71 @@ body.theme-cernavoda .proc-bar--actual {
   height: 100%;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  position: relative;
+  cursor: pointer;
 }
 
 [id^="card-total-progress1"] .bar-plan{ background-color: #5CB6FF; }
 [id^="card-total-progress1"] .bar-actual{ background-color: #95E1FB; }
+
+/* 툴팁이 잘리지 않게 */
+.bar-chart-horizontal,
+.bar-track {
+  overflow: visible;
+}
+
+/* 기준점 */
+.bar {
+  position: relative;
+  cursor: pointer;
+}
+
+/* 말풍선 본체 */
+.bar::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -38px;              /* 막대 위로 띄우기 */
+  left: 50%;               /* 중앙 */
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  background: #0c0936;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 10;
+}
+
+/* 꼬리(삼각형) */
+.bar::after {
+  content: "";
+  position: absolute;
+  top: -15px;              /* 말풍선 아래 */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #0c0936 transparent transparent transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+/* hover 시 표시 */
+.bar:hover::before,
+.bar:hover::after {
+  opacity: 1;
+}
+
+.bar:hover::before {
+  transform: translateX(-50%) translateY(-4px);
+}
+
 
 
 /* =========================
@@ -1443,26 +1518,28 @@ body.theme-cernavoda .proc-bar--actual {
   width: 6px;
   height: 22px;
   background: #686D78;
-  margin-right: 7px;
 }
 
 .card-title{
   display: flex;
   font-size: 16px;
   gap: 10px;
+  align-items: center;
 }
-
 .card-title span{
   color: #005EB8;
 }
-
+.end-date {
+  color: #7d8188 !important;
+  font-size: 14px;
+}
 /* 배지: HTML ID에 맞춰 카드1로 스코프 권장 */
 [id^="card-total-progress1"] .card-badge{
-  font-size: 11px;
+  font-size: 12px;
   color: #ffffff;
-  background: #0c0936;
+  background: #0C0936;
   padding: 4px 8px;
-  border-radius: 12px;
+  border-radius: 3px;
 }
 
 /* 툴팁(사용 시) */
@@ -1524,7 +1601,6 @@ body.theme-cernavoda .proc-bar--actual {
   --x-label-h: 18px;
   --grid-bottom-gap: var(--x-label-h);
 }
-
 [id^="card-total-progress2"] .bar-chart-horizontal{
   padding-top: 12px;
   padding-bottom: calc(var(--x-label-h) + 6px);
