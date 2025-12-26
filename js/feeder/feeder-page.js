@@ -105,8 +105,55 @@ function renderAll(contextId) {
   // 2-1) 좌측 이미지 + holes 오버레이 + 상태색
   renderFeederPlate(contextId);
 
-  // 2-2) 우측 요약 + 도넛 + mini bars
+  // 2-2) 도넛 + mini bars
   renderSummaryCard(contextId, plantId, position);
+  function renderMapBottomCards() {
+  const grid = document.querySelector(".map-bottom-grid");
+  if (!grid) return;
+
+  // ✅ 카드 여러 개 처리해야 하므로 querySelectorAll
+  const cards = grid.querySelectorAll(".card.card--big[data-context]");
+  if (!cards.length) {
+    console.warn('[feeder] map-bottom cards missing data-context');
+    return;
+  }
+
+  cards.forEach((card) => {
+    const ctx = card.dataset.context; // 예: pickering-upper / pickering-middle / cernavoda-upper ...
+    const data = window.feederSummaryDummyByContext?.[ctx];
+    if (!data) {
+      console.warn("[feeder] feederSummaryDummyByContext missing for", ctx);
+      return;
+    }
+
+    const produced = Number(data.produced ?? 0);
+    const total = Number(data.total ?? 0);
+    const pct = total > 0 ? Math.round((produced / total) * 100) : 0;
+
+    // 텍스트 세팅
+    const titleEl = card.querySelector('[data-field="title"]');
+    const prodEl  = card.querySelector('[data-field="produced"]');
+    const totalEl = card.querySelector('[data-field="total"]');
+    const pctEl   = card.querySelector('[data-field="percent"]');
+
+    if (titleEl) titleEl.textContent = data.title ?? "";
+    if (prodEl)  prodEl.textContent  = produced.toLocaleString();
+    if (totalEl) totalEl.textContent = total.toLocaleString();
+    if (pctEl)   pctEl.textContent   = `${pct}%`;
+
+    // ✅ 도넛 드로잉 (여기가 핵심)
+    const canvas = card.querySelector("canvas.feeder-canvas");
+    if (canvas && typeof window.drawFeederDonut === "function") {
+      const plantId = ctx.split("-")[0]; // pickering / cernavoda
+      const colors =
+        plantId === "pickering"
+          ? { from: "#6CCBFF", to: "#2F7BEF" }
+          : { from: "#FFC266", to: "#FF8A00" };
+
+      window.drawFeederDonut(canvas, pct, colors);
+    }
+  });
+}
 
   // 2-3) 주간 차트
   renderWeeklyChart(contextId);

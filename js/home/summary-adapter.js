@@ -1,8 +1,15 @@
 // js/pages/index-summary-adapter.js
 (function () {
   const homeSummaryDummy = {
-    pickering: {
-      title: "PICKERING",
+    pickering5: {
+      title: "PICKERING #5",
+      subtitle: "TOTAL",
+      produced: 240,
+      total: 740,
+      bars: { upper: 80, middle: 40, lower: 60 }
+    },
+    pickering6: {
+      title: "PICKERING #6",
       subtitle: "TOTAL",
       produced: 240,
       total: 740,
@@ -17,11 +24,13 @@
     }
   };
 
-  function getColorsByPlant(plantId) {
-    return plantId === "pickering"
-        ? { from: "#6CCBFF", to: "#2F7BEF" }
-        : { from: "#FFC266", to: "#FF8A00" };
-  }
+function getColorsByPlant(plantId) {
+  const isPickering = String(plantId).startsWith("pickering");
+  return isPickering
+    ? { from: "#6CCBFF", to: "#2F7BEF" }
+    : { from: "#FFC266", to: "#FF8A00" };
+}
+
 
   function adaptHomeSummaryToModel(plantId) {
     const data = homeSummaryDummy[plantId];

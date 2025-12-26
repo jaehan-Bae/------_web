@@ -139,25 +139,69 @@
       box.style.background = model.theme?.bg || "transparent";
     }
 
+
     // canvas
     const canvas = card.querySelector("canvas.spark");
     if (canvas) {
-      // CSS로 크기 제어 중이면 width/height 속성은 의미가 약함.
-      // 그래도 레이아웃 0일 때 대비용으로만 기본값:
       if (!canvas.width) canvas.width = 90;
-      if (!canvas.height) canvas.height = 32;
+      if (!canvas.height) canvas.height = 40;
 
-      const line = model.theme?.line || "#90BDEF";
+      // ✅ 1) 카드 키(weekly/monthly 판별)
+      const cardKey = (card.getAttribute("data-card") || "").toLowerCase();
+      const isWeekly  = cardKey.indexOf("weekly") === 0;
+      const isMonthly = cardKey.indexOf("monthly") === 0;
 
-      // 선 아래 면(투명) 색상: 라인 컬러에 맞춰 고정
-      // Pickering(#90BDEF), Cernavoda(#F6A255)
-      const fill =
-        line.toUpperCase() === "#90BDEF"
-          ? "rgba(144,189,239,0.18)"
-          : "rgba(246,162,85,0.18)";
+      // ✅ 2) 상위 progress-block(plant/unit 판별)
+      const block = card.closest(".progress-block");
+      const plant = block ? block.getAttribute("data-plant") : "";
+      const unit  = block ? block.getAttribute("data-unit") : "";
+
+      // ✅ 3) 기본 테마(기본색)
+      let line = model.theme?.line || "#90BDEF";
+      let fill = "rgba(59,130,246,0.18)";
+
+      if (plant === "pickering") {
+      if (isWeekly) {
+        // Weekly → 기존 하늘색 유지 (조금 또렷하게)
+        line = "rgba(144,189,239,1)";   // #90BDEF
+        fill = "rgba(144,189,239,0.18)";
+      } else if (isMonthly) {
+        // Monthly → 같은 계열, 다른 색
+        line = "rgba(37,99,235,1)";    // #60A5FA
+        fill = "rgba(37,99,235,0.18)";
+      }
+    }
+
+
+      // ===========================
+      // ✅ 원하는 조합만 덮어쓰기
+      // ===========================
+
+      // PICKERING #6 : Weekly/Monthly 서로 다른 파랑
+      if (plant === "pickering" && unit === "6") {
+        if (isWeekly) {
+          line = "rgba(59,130,246,1)";   // Weekly
+          fill = "rgba(59,130,246,0.18)";
+        } else if (isMonthly) {
+          line = "rgba(96,165,250,1)";   // Monthly
+          fill = "rgba(96,165,250,0.18)";
+        }
+      }
+
+      // CERNAVODA #1 : Weekly/Monthly 서로 다른 주황
+      if (plant === "cernavoda" && unit === "1") {
+        if (isWeekly) {
+          line = "rgba(246,162,85,1)";   // Weekly (#F6A255)
+          fill = "rgba(246,162,85,0.18)";
+        } else if (isMonthly) {
+          line = "rgba(218, 112, 14, 0.73)";   // Monthly (#EA7C18)
+          fill = "rgba(255,149,51,0.18)";
+        }
+      }
 
       drawSparkline(canvas, model.series || [], line, fill);
     }
+
   }
 
   // 전역 노출

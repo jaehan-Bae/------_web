@@ -23,10 +23,10 @@ body {
 }
 .layout-main {
   background: #F6F6F8;
+  flex: 1;
 }
 /* ============= 헤더 ================ */
 header {
-  margin-bottom: 20px;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
   width: 100%;
@@ -115,9 +115,10 @@ header {
 .main-wrap {
   display: flex;
   gap: 15px;
-  height: calc(100vh - 60px);
+  height: auto;
   padding-bottom: 10px;
   flex: 1;
+  min-height: 0;
 }
 .main-left {
   display: flex;
@@ -274,12 +275,11 @@ header {
 /* layout */
 .map-bottom-grid{
   display: grid;
-  grid-template-columns: 2fr 2fr 1.6fr 1.6fr; /* big, big, small, small */
+  grid-template-columns: 2fr 2fr 2fr; /* big, big, small, small */
   gap: 15px;
   align-items: stretch;
-    grid-auto-rows: 1fr;            /* 자동 생성되는 행도 1fr로 채움 */
-      align-content: stretch;         /* 행들이 남는 높이를 분배해서 채움 */
-
+  grid-auto-rows: 1fr;            /* 자동 생성되는 행도 1fr로 채움 */
+  align-content: stretch;         /* 행들이 남는 높이를 분배해서 채움 */
 }
 /* size */
 .card--big{
@@ -294,7 +294,7 @@ header {
   height: 100px;
 }
 .card--small{
-  min-height: 140px;
+  min-height: 110px;
 }
 
 .card.card--big [data-role^="mini-"]{
@@ -417,18 +417,45 @@ header {
   display: flex;
   flex-direction: column; 
   flex: 1;          
-  width: 65%;
+  width: 53%;
 }
 .progress-adjust {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   flex: 1;
+  justify-content: center;
+}
+.progress-block {
+  width: 100%;
+}
+/* 임시 색상값 */
+/* PICKERING #6 */
+.card.small-kpi[data-plant="pickering"][data-unit="6"] {
+  --spark-line: #6A5AE0;
+  --spark-fill: rgba(106,90,224,0.18);
+}
+/* CERNAVODA #1 */
+.card.small-kpi[data-plant="cernavoda"][data-unit="1"] {
+  --spark-line: #FF7A00;
+  --spark-fill: rgba(255,122,0,0.18);
+}
+
+.progress-title {
+  background: #e7f0f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 5px 0;
+  text-align: center;
+  margin: 5px 0;
+  color: #686D78;
+  font-weight: 500;
+  font-size: 14px;
 }
 .progress-wrap {
-  display: flex;
-  flex: 3.8;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2열 */
+  gap: 5px;
 }
 .progress-bottom {
   flex: 1;
@@ -530,7 +557,7 @@ header {
 .card.card--big .summary-text .kv .v{
   font-size: 22px;
   font-weight: 700;
-  color: #111827;
+  color: #333;
 }
 /* divider */
 .card.card--big .divider{
@@ -539,12 +566,13 @@ header {
 }
 /* ===== mini bars: 3줄 슬롯 고정 + 간격 축소 ===== */
 .card.card--small [data-field="title"]{
-  height: 24px;                 /* 고정 */
   display: flex;
   justify-content: center;
   color: #686D78;
   font-weight: 600;
   gap: 5px;
+  font-size: 14px;
+  padding-bottom: 2px;
 }
 .card.card--big .mini-row{
   margin-top: 12px;
@@ -605,53 +633,48 @@ header {
   font-size: 14px;
 }
 .card.card--small {
-  padding: 15px 20px;
+  padding: 12px 20px;
   display: flex;
   flex-direction: column;
 }
-.small-kpi__body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.small-kpi__value {
-  font-size: 32px;
-  font-weight: 500;
-}
-.small-kpi__top {
+.small-kpi__body{
   display: flex;
   justify-content: space-between;
-  flex: 2;
   align-items: center;
 }
-.small-kpi__meta {
-  flex: 1;
+.small-kpi__left{
+  column-gap: 12px;               
+}
+.small-kpi__value {
+  font-size: 22px;
+  font-weight: 500;
+  order: 1;
+}
+.small-kpi__meta{
+  text-align: left;
 }
 .small-kpi__label {
-  font-size: 12px;
+  font-size: 10px;
 }
 .small-kpi__delta {
   display: flex;
   align-items: center;
-  gap: 7px;
+  font-size: 14px;
+  gap: 3px;
 }
 .small-kpi__delta img {
-  width: 13px;
+  width: 12px;
   top: 2px;
 }
 .card.card--small.small-kpi .spark {
   background: #fff;
 }
-.card.card--small.small-kpi .spark-box{
-  width: clamp(62px, 22vw, 110px);
-  height: 32px;
-  border-radius: 6px;
-  overflow: hidden; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.spark-box{
+  justify-self: end; /* spark를 오른쪽으로 */
+  width: clamp(72px, 30%, 130px);
+  height: 36px;
 }
+
 .card.card--small.small-kpi .spark{
   width: 100%;
   height: 100%;
@@ -1200,14 +1223,15 @@ body.theme-cernavoda .proc-bar--actual {
   margin-top: 10px;
 }
 .layout-right {
-  height: 100vh;
   display: flex;
+  height: 100vh;
   flex-direction: column;
   overflow: hidden;
 }
 #content-wrap {
   flex: 1;                     
   padding: 0 20px;
+  min-height: 0;
 }
 /* 가로 슬라이드 컨테이너 */
 .progress-slides {

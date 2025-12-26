@@ -3,7 +3,7 @@
   const kpiSmallDummy = {
     "weekly-pickering": {
       title: "Weekly",
-      stitle: "(Pickering)",
+      stitle: "(Upper)",
       value: 650,
       label: "이번 주 목표",
       deltaPct: 9,
@@ -12,7 +12,7 @@
     },
     "weekly-cernavoda": {
       title: "Weekly",
-      stitle: "(Cernavoda)",
+      stitle: "(Lower)",
       value: 650,
       label: "이번 주 목표",
       deltaPct: 12,
@@ -21,7 +21,7 @@
     },
     "monthly-pickering": {
       title: "Monthly",
-      stitle: "(Pickering)",
+      stitle: "(Upper)",
       value: 650,
       label: "이번 달 목표",
       deltaPct: 3,
@@ -30,7 +30,7 @@
     },
     "monthly-cernavoda": {
       title: "Monthly",
-      stitle: "(Cernavoda)",
+      stitle: "(Lower)",
       value: 650,
       label: "이번 달 목표",
       deltaPct: 7,
